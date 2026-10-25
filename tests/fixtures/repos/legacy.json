@@ -1,0 +1,15 @@
+{
+  "name": "Legacy Source",
+  "apps": [
+    {
+      "name": "Legacy App",
+      "bundleIdentifier": "com.example.legacy",
+      "developerName": "Old Dev",
+      "localizedDescription": "Legacy format.",
+      "iconURL": "http://example.com/insecure-icon.png",
+      "version": "1.2.3",
+      "downloadURL": "https://example.com/legacy.ipa",
+      "size": 4096
+    }
+  ]
+}

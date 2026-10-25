@@ -1,0 +1,25 @@
+{
+  "name": "Hostile Source",
+  "apps": [
+    {
+      "name": "Good App",
+      "bundleIdentifier": "com.example.good",
+      "localizedDescription": "<script>alert(1)</script>",
+      "versions": [{"version": "1.0", "downloadURL": "https://example.com/good.ipa", "size": 10}]
+    },
+    {
+      "name": "Http App",
+      "bundleIdentifier": "com.example.http",
+      "versions": [{"version": "1.0", "downloadURL": "http://example.com/http.ipa"}]
+    },
+    {
+      "bundleIdentifier": "com.example.noname",
+      "versions": [{"version": "1.0", "downloadURL": "https://example.com/noname.ipa"}]
+    },
+    {
+      "name": "Numeric Bundle",
+      "bundleIdentifier": 12345,
+      "versions": [{"version": "1.0", "downloadURL": "https://example.com/num.ipa"}]
+    }
+  ]
+}

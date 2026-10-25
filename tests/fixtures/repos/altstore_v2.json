@@ -1,0 +1,17 @@
+{
+  "name": "Example Source",
+  "iconURL": "https://example.com/icon.png",
+  "apps": [
+    {
+      "name": "Example App",
+      "bundleIdentifier": "com.example.app",
+      "developerName": "Example Dev",
+      "localizedDescription": "An example app.",
+      "iconURL": "https://example.com/app.png",
+      "versions": [
+        {"version": "452.0.1", "downloadURL": "https://example.com/app-452.ipa", "size": 1234567},
+        {"version": "451.0.0", "downloadURL": "https://example.com/app-451.ipa", "size": 1200000}
+      ]
+    }
+  ]
+}

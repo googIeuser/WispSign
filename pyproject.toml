@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "wispsign"
+version = "0.1.0"
+description = "Windows desktop app that signs iOS IPAs and installs them to an iPhone"
+requires-python = ">=3.12,<3.13"
+license = "GPL-3.0-or-later"
+license-files = ["LICENSE"]
+# Lower bounds only; release builds pin exact versions via requirements-lock.txt.
+dependencies = [
+    "pywebview>=5.4,<6",
+    "pymobiledevice3>=11.43.1",
+    "cryptography>=43",
+    "httpx>=0.28",
+]
+
+[project.optional-dependencies]
+# packaging: imported by packaging/third_party.py (lock and notices).
+dev = ["pytest", "pytest-cov", "ruff", "pyinstaller==6.16.0", "packaging>=24"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["tests/fixtures"]
+
+[tool.coverage.report]
+fail_under = 80
