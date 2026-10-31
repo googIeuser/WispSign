@@ -1,4 +1,4 @@
-"""Library of IPA files kept under the app data folder."""
+pass
 
 import plistlib
 import posixpath
@@ -27,17 +27,17 @@ class LibraryEntry:
     name: str
     bundle_id: str
     version: str
-    path: str  # file name inside ipas, or an absolute path
-    source: str  # "file" or the repo URL
+    path: str
+    source: str
     added_at: str
-    owned: bool = True  # WispSign created the file, so removing may delete it
+    owned: bool = True
 
 
 _Entries = list[LibraryEntry]
 
 
 def _legacy_owned(path: object) -> bool:
-    """Rows written before ``owned`` existed: only files inside ipas are ours."""
+    pass
     return isinstance(path, str) and not Path(path).is_absolute()
 
 
@@ -96,7 +96,7 @@ def _largest_icon(zf: zipfile.ZipFile, app_dir: str, bases: list[str]) -> bytes 
 
 
 def _inspect(ipa: Path) -> tuple[dict, bytes | None]:
-    """Read Info.plist (and the icon) straight from the zip, no extraction."""
+    pass
     try:
         with zipfile.ZipFile(ipa) as zf:
             member = _find_info_plist(zf)
@@ -134,7 +134,7 @@ class Library:
         self._store = JsonStore(paths.library, [])
         self._lock = threading.Lock()
 
-    # --- reading ----------------------------------------------------
+
 
     def list(self) -> _Entries:
         data = self._store.load()
@@ -144,7 +144,7 @@ class Library:
                 continue
             if "owned" not in row:
                 row = {**row, "owned": _legacy_owned(row.get("path"))}
-            else:  # only a real True may let remove() delete the file
+            else:
                 row = {**row, "owned": row["owned"] is True}
             try:
                 entries.append(LibraryEntry(**row))
@@ -164,7 +164,7 @@ class Library:
         except OSError:
             return None
 
-    # --- writing ----------------------------------------------------
+
 
     def add_file(self, ipa: Path) -> LibraryEntry:
         info, icon = _inspect(ipa)
@@ -185,13 +185,13 @@ class Library:
         )
 
     def add_download(self, app: RepoApp, path: Path) -> LibraryEntry:
-        """Register a file RepoClient.download just created (so it is owned)."""
+        pass
         try:
             _, icon = _inspect(path)
         except WispError:
-            path.unlink(missing_ok=True)  # our own fresh download, never a user file
+            path.unlink(missing_ok=True)
             raise
-        # Registered in place: inside ipas by file name, elsewhere by absolute path.
+
         if path.parent.resolve() == self._paths.ipas.resolve():
             name = path.name
         else:
@@ -216,11 +216,11 @@ class Library:
             if target is None:
                 return
             self._save([e for e in entries if e.id != id])
-        if target.owned:  # never delete a file WispSign did not create
+        if target.owned:
             (self._paths.ipas / target.path).unlink(missing_ok=True)
         self._icon_file(id).unlink(missing_ok=True)
 
-    # --- internals --------------------------------------------------
+
 
     def _copy_in(self, source: Path, name: str) -> None:
         try:

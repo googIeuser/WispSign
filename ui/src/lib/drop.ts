@@ -1,7 +1,7 @@
-/**
- * Paths of dropped .ipa files. A browser never exposes a dropped file's
- * full path; the host must attach it (`pywebviewFullPath` or `path`).
- */
+
+
+
+
 
 export type DropResult = { paths: string[]; unresolved: number; ignored: number }
 
@@ -28,7 +28,7 @@ export function droppedIpas(files: Iterable<File>): DropResult {
   return result
 }
 
-/** Inside the desktop app the Python host adds dropped files itself. */
+
 export function hostHandlesDrops(win: { pywebview?: unknown }): boolean {
   return Boolean(win.pywebview)
 }

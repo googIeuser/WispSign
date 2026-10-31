@@ -1,8 +1,8 @@
-"""Generate packaging/assets/wispsign.ico: a lime "W" on a near-black rounded tile.
+pass
 
-Pure standard library (struct + zlib); the icon is committed, this script only
-documents and reproduces it.
-"""
+
+
+
 
 import itertools
 import struct
@@ -14,7 +14,7 @@ LIME = (182, 255, 0, 255)
 CLEAR = (0, 0, 0, 0)
 SIZES = (16, 32, 48, 64, 128, 256)
 TARGET = Path(__file__).resolve().parent / "assets" / "wispsign.ico"
-# W polyline in a unit square, drawn as thick segments.
+
 W_POINTS = ((0.18, 0.25), (0.34, 0.75), (0.5, 0.42), (0.66, 0.75), (0.82, 0.25))
 STROKE = 0.065
 CORNER = 0.2

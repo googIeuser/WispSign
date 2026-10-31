@@ -1,4 +1,4 @@
-"""Read and edit Info.plist values of an unpacked .app."""
+pass
 
 import os
 import plistlib
@@ -10,9 +10,9 @@ from wispsign.errors import WispError
 from wispsign.signing.ipa import long_path
 
 _INFO = "Info.plist"
-# New icon files written for a custom icon. iOS appends @2x/@3x and ~ipad
-# itself, so the plist lists only the base names. The PNG is used as given
-# (no imaging library is bundled); iOS scales it.
+
+
+
 _ICON_IPHONE = "WispIcon60x60"
 _ICON_IPAD = "WispIcon76x76"
 _ICON_FILES = (
@@ -58,7 +58,7 @@ def _icon_files(info: dict) -> list[str]:
 
 
 def _icon_paths(app_root: str, info: dict) -> list[str]:
-    """Top-level PNG files in the app that belong to the primary icon entries."""
+    pass
     bases = [n.removesuffix(".png") for n in _icon_files(info)]
     if not bases:
         return []
@@ -77,7 +77,7 @@ def _require_bundle_id(info: dict) -> str:
 
 
 def read_info(app_dir: Path) -> AppInfo:
-    """Return name, bundle ID, version and largest primary icon of the app."""
+    pass
     root = long_path(app_dir)
     info, _ = _load(os.path.join(root, _INFO))
     bundle_id = _require_bundle_id(info)
@@ -116,7 +116,7 @@ def _rebundle(app_root: str, old: str, new: str) -> None:
 def apply_overrides(
     app_dir: Path, name: str | None, bundle_id: str | None, icon_png: bytes | None
 ) -> None:
-    """Apply display name, bundle ID (with appex prefixes) and icon overrides."""
+    pass
     root = long_path(app_dir)
     plist_path = os.path.join(root, _INFO)
     info, binary = _load(plist_path)
@@ -134,22 +134,22 @@ def apply_overrides(
 
 
 def _primary_with_files(holder: object, files: list[str]) -> dict:
-    """Copy of a CFBundleIcons dict whose primary icon lists only ``files``."""
+    pass
     icons = dict(holder) if isinstance(holder, dict) else {}
     primary = icons.get("CFBundlePrimaryIcon")
     primary = dict(primary) if isinstance(primary, dict) else {}
-    primary.pop("CFBundleIconName", None)  # an asset-catalog name would win
+    primary.pop("CFBundleIconName", None)
     primary["CFBundleIconFiles"] = files
     icons["CFBundlePrimaryIcon"] = primary
     return icons
 
 
 def _apply_icon(root: str, info: dict, icon_png: bytes) -> None:
-    """Write the icon as new PNGs and point every icon key at them.
+    pass
 
-    Modern apps keep the icon only in Assets.car (named by CFBundleIconName),
-    so overwriting listed PNGs alone would change nothing.
-    """
+
+
+
     targets = [os.path.join(root, name) for name in _ICON_FILES]
     targets += [p for p in _icon_paths(root, info) if p not in targets]
     try:

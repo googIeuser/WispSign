@@ -1,4 +1,4 @@
-"""Builders for minimal unsigned .app bundles and IPAs (test fixtures)."""
+pass
 
 import os
 import plistlib
@@ -8,7 +8,7 @@ from macho_stub import build_arm64_stub
 
 from wispsign.signing.ipa import long_path, pack_ipa
 
-# 1x1 transparent PNG
+
 PNG_1X1 = bytes.fromhex(
     "89504e470d0a1a0a0000000d49484452000000010000000108060000001f15c489"
     "0000000d4944415478da63f8ffff3f0005fe02fea7d6054200000000"
@@ -26,7 +26,7 @@ def _put(path: str, data: bytes) -> None:
 
 
 def _deep_resource(app: Path, deep_path_len: int) -> str:
-    """Path of a file inside ``app`` whose plain path length reaches the target."""
+    pass
     base = os.path.abspath(app)
     parts: list[str] = []
     length = len(base) + len(os.sep + "deep.bin")
@@ -43,7 +43,7 @@ def make_app(
     deep_path_len: int = 0,
     with_appex: bool = True,
 ) -> Path:
-    """Create ``root/Test.app`` and return it."""
+    pass
     app = root / f"{APP_NAME}.app"
     base = long_path(app)
     stub = build_arm64_stub()
@@ -73,6 +73,6 @@ def make_app(
 
 
 def make_ipa(root: Path, **kwargs: object) -> Path:
-    """Build an app under ``root/src`` and zip it to ``root/Test.ipa``."""
+    pass
     app = make_app(root / "src", **kwargs)
     return pack_ipa(app, root / f"{APP_NAME}.ipa")

@@ -55,7 +55,7 @@
   async function onDrop(event: DragEvent) {
     event.preventDefault()
     dragging = false
-    if (hostHandlesDrops(window)) return // the desktop host handles native drops
+    if (hostHandlesDrops(window)) return
     const found = droppedIpas(event.dataTransfer?.files ?? [])
     if (found.unresolved || (found.ignored && !found.paths.length)) {
       pushToast({ kind: 'info', text: t(found.unresolved ? 'library.drop_unsupported' : 'library.drop_not_ipa') })

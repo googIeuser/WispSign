@@ -20,7 +20,7 @@
   })
 </script>
 
-<!-- A file dropped outside a drop target must not navigate the window away. -->
+
 <svelte:window ondragover={(e) => e.preventDefault()} ondrop={(e) => e.preventDefault()} />
 
 {#key $locale}

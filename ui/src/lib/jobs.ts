@@ -1,4 +1,4 @@
-/** Background job state keyed by what it is for, so views can unmount and come back. */
+
 import { get, writable } from 'svelte/store'
 import { JobError, runJob, type WispErr } from './api'
 
@@ -20,7 +20,7 @@ export function clearJob(key: string): void {
 const toWispErr = (exc: unknown): WispErr =>
   exc instanceof JobError ? exc.error : { code: 'error.unknown', params: {}, detail: String(exc) }
 
-/** Start `method` unless a job for `key` is already running; resolves when it settles. */
+
 export async function trackJob(key: string, method: string, args: unknown[]): Promise<void> {
   if (get(jobs)[key]?.status === 'running') return
   put(key, { status: 'running' })

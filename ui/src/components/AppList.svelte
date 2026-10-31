@@ -15,7 +15,7 @@
 
   let listEl: HTMLElement | undefined = $state()
 
-  // Unique even if the caller's keys collide (a keyed each throws on duplicates).
+
   const keys = $derived(uniqueKeys(items.map(key)))
   const rows = $derived(items.map((item, i) => ({ item, key: keys[i] })))
   const selectedIndex = $derived(keys.indexOf(selected ?? ''))

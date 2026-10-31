@@ -1,4 +1,4 @@
-/** Translations: t(key, params) over the active locale store. */
+
 import { get, writable } from 'svelte/store'
 import en from '../locales/en.json'
 import tr from '../locales/tr.json'
@@ -24,7 +24,7 @@ export function t(key: string, params?: Record<string, string | number>): string
   )
 }
 
-/** The language the user chose in settings; otherwise the system language (tr, else en). */
+
 export async function initLocale(): Promise<void> {
   const res = await call<{ language?: string | null }>('settings_get')
   const saved = res.ok ? res.data.language : null

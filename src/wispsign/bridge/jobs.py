@@ -1,10 +1,10 @@
-"""Background jobs: each runs on its own daemon thread and reports through ``emit``.
+pass
 
-Contract: a fast job can emit its terminal event (``done`` or ``error``) before
-the caller has received the job id. The runner therefore keeps the terminal
-event of the most recent jobs; callers fetch it with ``result(job_id)`` right
-after receiving the id (or buffer events by id) so no completion is ever lost.
-"""
+
+
+
+
+
 
 import json
 import logging
@@ -36,7 +36,7 @@ class JobRunner:
         return job
 
     def result(self, job: str) -> dict | None:
-        """Terminal event of a finished job, or None while it is still running."""
+        pass
         with self._lock:
             return self._results.get(job)
 
@@ -72,7 +72,7 @@ class JobRunner:
 
         try:
             result = jsonable(fn(progress))
-            json.dumps(result)  # a result the UI cannot receive is an error
+            json.dumps(result)
             event = {"job": job, "type": "done", "result": result}
         except Exception as exc:  # noqa: BLE001 - mapped to an error event
             event = self._error_event(job, exc)

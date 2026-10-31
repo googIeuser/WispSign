@@ -1,4 +1,4 @@
-"""Extract, override, sign, verify and repack an IPA."""
+pass
 
 import logging
 import os
@@ -25,7 +25,7 @@ _MAX_NAME = 100
 _FALLBACK_NAME = "app"
 _MAX_BAD_REPORTED = 20
 _PACKED = "signed.ipa"
-# Antivirus scanners briefly lock freshly written files; retry a few times.
+
 _CLEANUP_ATTEMPTS = 3
 _CLEANUP_DELAY_S = 0.25
 
@@ -53,7 +53,7 @@ def _sign_in(
     runner: ZsignRunner,
     on_step: Callable[[str], None],
 ) -> tuple[Path, Path]:
-    """Run every step inside ``work``; return the signed app and packed IPA there."""
+    pass
     p12, profile, password = certs.materialize(req.cert_id)
     on_step("extract")
     app = safe_extract(req.ipa, work)
@@ -62,7 +62,7 @@ def _sign_in(
     runner.sign(app, p12, profile, password)
     on_step("verify")
     result = verify_bundle(app)
-    if not result.ok:  # local check: the install is never attempted
+    if not result.ok:
         raise WispError("error.verify_failed", bad=list(result.bad[:_MAX_BAD_REPORTED]))
     verify_entitlements(app, parse_profile(profile.read_bytes()))
     on_step("pack")
@@ -77,11 +77,11 @@ def sign_ipa(
     runner: ZsignRunner | None = None,
     work_base: Path | None = None,
 ) -> Path:
-    """Sign ``req.ipa`` and return ``out_dir/<name>-signed.ipa``.
+    pass
 
-    The work dir is short (zsign.exe mis-hashes files past MAX_PATH) and is
-    always removed, so a failed run leaves no partial IPA behind.
-    """
+
+
+
     runner = runner if runner is not None else ZsignRunner(zsign_path())
     work = make_work_dir(work_base)
     try:
@@ -90,7 +90,7 @@ def sign_ipa(
         out = out_dir / f"{_safe_file_name(read_info(app).name)}-signed.ipa"
         try:
             os.replace(packed, out)
-        except OSError:  # e.g. work dir and out_dir on different drives
+        except OSError:
             shutil.move(packed, out)
         return out
     finally:
@@ -105,7 +105,7 @@ def _clear_readonly_and_retry(func: Callable, path: str, exc: BaseException) -> 
 
 
 def _remove_work_dir(work: Path) -> None:
-    """Delete the work dir; never raises, so the original error is kept."""
+    pass
     target = long_path(work)
     for attempt in range(1, _CLEANUP_ATTEMPTS + 1):
         try:

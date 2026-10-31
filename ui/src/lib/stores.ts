@@ -1,4 +1,4 @@
-/** App-wide state shared by the views: navigation, repos, library and downloads. */
+
 import { get, writable } from 'svelte/store'
 import { call, JobError, onLibraryChanged, runJob, type LibraryChangedEvent, type WispErr } from './api'
 import { t } from './i18n'
@@ -9,7 +9,7 @@ import type { Device, LibraryEntry, ViewId } from './types'
 
 export const activeView = writable<ViewId>('repos')
 
-// --- repos -------------------------------------------------------------
+
 
 export const repos = writable<RepoEntry[]>([])
 export const reposStatus = writable<'idle' | 'loading' | 'ready'>('idle')
@@ -41,7 +41,7 @@ export function ensureRepos(): void {
   if (get(reposStatus) === 'idle') void refreshRepos()
 }
 
-/** Add a repo; resolves with an error to show inline, or null on success. */
+
 export async function addRepo(url: string): Promise<WispErr | null> {
   const res = await call<Repo>('repos_add', url)
   if (!res.ok) return res.error
@@ -74,13 +74,13 @@ export async function downloadApp(app: RepoApp): Promise<void> {
   if (state?.status === 'done') {
     pushToast({ kind: 'info', text: t('repos.downloaded') })
     await loadLibrary()
-    clearJob(key) // from here "in library" comes from the library list itself
+    clearJob(key)
   } else if (state?.status === 'error') {
     pushToast({ kind: 'error', text: '', error: state.error })
   }
 }
 
-// --- library -----------------------------------------------------------
+
 
 export const library = writable<LibraryEntry[]>([])
 export const libraryStatus = writable<'idle' | 'loading' | 'ready'>('idle')
@@ -100,7 +100,7 @@ export function ensureLibrary(): void {
 
 const iconCache = new Map<string, Promise<string | null>>()
 
-/** Data URL of a library entry's icon (cached per id). */
+
 export function libraryIcon(id: string): Promise<string | null> {
   let icon = iconCache.get(id)
   if (!icon) {
@@ -110,7 +110,7 @@ export function libraryIcon(id: string): Promise<string | null> {
   return icon
 }
 
-// --- devices -----------------------------------------------------------
+
 
 export type DeviceScan = { devices: Device[]; error: WispErr | null }
 
@@ -119,9 +119,9 @@ export async function scanDevices(): Promise<DeviceScan> {
   return res.ok ? { devices: res.data, error: null } : { devices: [], error: res.error }
 }
 
-// --- native file drops ---------------------------------------------------
 
-/** The desktop host adds natively dropped files itself, then broadcasts the outcome. */
+
+
 export async function handleHostDrop(event: LibraryChangedEvent): Promise<void> {
   for (const err of event.errors) pushToast({ kind: 'error', text: '', error: err })
   if (event.unresolved) pushToast({ kind: 'info', text: t('library.drop_unsupported') })
@@ -134,7 +134,7 @@ export async function handleHostDrop(event: LibraryChangedEvent): Promise<void> 
   }
 }
 
-/** Listen for host drops in every view; returns the unsubscribe function. */
+
 export function initHostEvents(): () => void {
   return onLibraryChanged((event) => void handleHostDrop(event))
 }

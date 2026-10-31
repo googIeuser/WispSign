@@ -1,4 +1,4 @@
-"""python -m wispsign"""
+pass
 
 import sys
 

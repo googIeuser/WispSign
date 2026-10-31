@@ -22,7 +22,7 @@ ROOT = Path(__file__).resolve().parent.parent
 LOCK_FILE = ROOT / "requirements-lock.txt"
 ZSIGN_LICENSE = ROOT / "third_party" / "zsign" / "LICENSE"
 PROJECT = "wispsign"
-# Bundled into the frozen app besides the runtime dependencies.
+
 BUNDLED_TOOLS = ("pyinstaller",)
 _LICENSE_PREFIXES = ("license", "licence", "copying", "notice")
 _RULE = "=" * 78
@@ -39,7 +39,7 @@ def _wanted(req: Requirement, extras: frozenset[str]) -> bool:
 
 
 def runtime_closure(root: str = PROJECT) -> list[metadata.Distribution]:
-    """Installed distributions ``root`` needs at runtime (dev extras excluded)."""
+    pass
     found: dict[str, metadata.Distribution] = {}
     queue: list[tuple[str, frozenset[str]]] = [(root, frozenset())]
     seen: set[tuple[str, frozenset[str]]] = set()

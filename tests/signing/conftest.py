@@ -14,7 +14,7 @@ def fake_cert(tmp_paths):
 
 @pytest.fixture
 def sign_in_place(tmp_paths, fake_cert):
-    """Sign an unpacked .app where it lies, with the real zsign and the fake cert."""
+    pass
     p12, profile, password = CertStore(tmp_paths).materialize(fake_cert.id)
 
     def sign(app):

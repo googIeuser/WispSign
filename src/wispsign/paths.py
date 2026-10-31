@@ -1,4 +1,4 @@
-"""Filesystem locations used by WispSign."""
+pass
 
 import os
 import secrets
@@ -52,7 +52,7 @@ def _random_name() -> str:
 
 
 def make_work_dir(base: Path | None = None) -> Path:
-    r"""Create a uniquely named short directory under base (default %LOCALAPPDATA%\WS)."""
+    pass
     parent = base if base is not None else Path(os.environ["LOCALAPPDATA"]) / "WS"
     parent.mkdir(parents=True, exist_ok=True)
     while True:

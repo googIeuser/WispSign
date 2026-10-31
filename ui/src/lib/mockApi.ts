@@ -1,9 +1,9 @@
-/**
- * Canned backend for `?mock`: same envelopes and job events as the Python bridge.
- * Flags: nodevice, failsign, failvalidate, seedlib (library starts with Demo App; htmldesc: first repo app description is an HTML string;
- * brokencert: one certificate record is unreadable; updatefail: the update check fails;
- * noupdates: no release repo is configured, so update checks are off).
- */
+
+
+
+
+
+
 import type { JobEvent, WispErr } from './api'
 import { certWarnings } from './certRules'
 
@@ -20,8 +20,8 @@ const failure = (code: string, params: Record<string, unknown> = {}): Fail => ({
   ok: false,
   error: { code, params, detail: 'mock' },
 })
-// Expiry dates follow the real clock (as the cards do); half a day of slack keeps
-// the whole-day count stable while a session runs.
+
+
 const inDays = (days: number) => new Date(Date.now() + days * DAY_MS + DAY_MS / 2).toISOString()
 
 const REPO_URL = 'https://example.com/repo.json'
@@ -101,7 +101,7 @@ const makeCerts = () => [
   },
 ]
 
-// What certs_list reports for a folder whose meta.json cannot be read.
+
 const BROKEN_CERT = {
   id: '9f8e7d6c5b4a',
   nickname: '9f8e7d6c5b4a',
@@ -149,16 +149,16 @@ type JobStep = { step: string; percent?: number }
 type Outcome = { result: unknown } | { error: WispErr }
 
 export function createMockApi(emit: Emit, flags: URLSearchParams) {
-  // A fresh install: no language chosen yet, so the UI follows the browser.
+
   let settings: { language: string | null; download_dir: string } = { language: null, download_dir:'C:\\Users\\demo\\WispSign\\ipas' }
   let repos = [REPO_URL]
-  // Empty by default so flows must really download; `seedlib` pre-fills it.
+
   let library: ReturnType<typeof makeEntry>[] = flags.has('seedlib') ? [makeEntry()] : []
   let certs = flags.has('brokencert') ? [...makeCerts(), BROKEN_CERT] : makeCerts()
   let jobCounter = 0
   const htmlDesc = flags.has('htmldesc')
 
-  // Events are emitted on timers, so they always trail the returned id.
+
   function startJob(steps: JobStep[], outcome: Outcome): Ok<string> {
     const job = `mockjob${String(++jobCounter).padStart(4, '0')}`
     steps.forEach((s, i) =>
@@ -216,7 +216,7 @@ export function createMockApi(emit: Emit, flags: URLSearchParams) {
         result: repos.map((url) => makeRepo(url, htmlDesc)),
       }),
     repo_download: async (repoUrl: string, bundleId: string) => {
-      // Like Library.add_download: every download is a new file with its own entry.
+
       const app = makeRepo(repoUrl, htmlDesc).apps.find((a) => a.bundle_id === bundleId)
       if (!app) return failure('error.repo_invalid')
       const path = `${bundleId}-${app.version}-${library.length + 1}.ipa`

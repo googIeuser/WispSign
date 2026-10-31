@@ -1,6 +1,6 @@
 @import 'tailwindcss';
 
-/* "Gece + neon": near-black surfaces, one lime accent. Local/system fonts only. */
+
 @theme {
   --color-bg: #0b0b0b;
   --color-panel: #101010;
@@ -8,7 +8,7 @@
   --color-line: #1f1f1f;
   --color-line-strong: #2a2a2a;
   --color-ink: #f2f2f2;
-  /* Both reach WCAG AA (4.5:1) on every surface below; theme.test.ts checks it. */
+
   --color-muted: #959595;
   --color-placeholder: #8c8c8c;
   --color-accent: #c6ff3d;
@@ -59,7 +59,7 @@
 }
 
 @layer components {
-  /* Shared controls that the views reuse. */
+
   .label {
     font-family: var(--font-display);
     font-size: 11px;

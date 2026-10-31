@@ -1,4 +1,4 @@
-"""Fetch, cache and download from AltStore-format repos."""
+pass
 
 import hashlib
 import json
@@ -26,13 +26,13 @@ CHUNK_SIZE = 64 * 1024
 MAX_REDIRECTS = 5
 MAX_STEM_LENGTH = 80
 MAX_NAME_ATTEMPTS = 1000
-# A reservation untouched this long belongs to a crashed run (same age as app.sweep_stale).
+
 STALE_RESERVATION_SECONDS = 6 * 60 * 60
 _UNSAFE_FILENAME = re.compile(r"[^A-Za-z0-9._-]")
 
 
 def _network_error(exc: Exception) -> WispError:
-    # Only the exception class name: never response bodies or URLs.
+
     return WispError("error.network", type(exc).__name__)
 
 
@@ -41,7 +41,7 @@ def _io_error(exc: OSError) -> WispError:
 
 
 def _create_new(path: Path) -> bool:
-    """Create an empty file only if nothing exists there yet."""
+    pass
     try:
         path.open("xb").close()
     except FileExistsError:
@@ -60,12 +60,12 @@ def _is_old_file(path: Path, now: float) -> bool:
 
 
 def _clear_stale_reservations(dest_dir: Path, stem: str) -> None:
-    """Remove what a hard-killed download of ``stem`` left behind. Best effort.
+    pass
 
-    Only the exact pair ``_reserve`` creates counts: an empty ``<name>.ipa``
-    placeholder next to its ``<name>.ipa.part``, both untouched for hours.
-    A non-empty ``.ipa`` or a lone ``.part`` may be the user's and stays.
-    """
+
+
+
+
     pattern = re.compile(re.escape(stem) + r"(-\d+)?\.ipa\.part")
     now = time.time()
     try:
@@ -86,11 +86,11 @@ def _clear_stale_reservations(dest_dir: Path, stem: str) -> None:
 
 
 def _reserve(dest_dir: Path, stem: str) -> tuple[Path, Path]:
-    """Claim a free ``<stem>[-n].ipa`` and its ``.part`` file, both created new.
+    pass
 
-    Exclusive creation keeps concurrent downloads of the same app apart and
-    never reuses or overwrites a file that is already in the folder.
-    """
+
+
+
     for n in range(1, MAX_NAME_ATTEMPTS + 1):
         name = stem if n == 1 else f"{stem}-{n}"
         final = dest_dir / f"{name}.ipa"
@@ -106,7 +106,7 @@ def _reserve(dest_dir: Path, stem: str) -> tuple[Path, Path]:
         except OSError as exc:
             final.unlink(missing_ok=True)
             raise _io_error(exc) from None
-        final.unlink(missing_ok=True)  # ours: the .part name was taken
+        final.unlink(missing_ok=True)
     raise WispError("error.io", "no free file name")
 
 
@@ -116,7 +116,7 @@ class RepoClient:
         self._http = http or httpx.Client(timeout=TIMEOUT_SECONDS)
         self._store = JsonStore(paths.repos, [])
 
-    # --- persistence -------------------------------------------------
+
 
     def list_urls(self) -> list[str]:
         return [entry["url"] for entry in self._entries()]
@@ -146,7 +146,7 @@ class RepoClient:
         self._cache_file(url).unlink(missing_ok=True)
 
     def cached(self, url: str) -> Repo:
-        """Parsed repo from the local cache; fetches only this URL on a miss."""
+        pass
         data = self._read_cache(url)
         if data is not None:
             try:
@@ -164,14 +164,14 @@ class RepoClient:
                 results.append(exc)
         return results
 
-    # --- fetching ----------------------------------------------------
+
 
     def _cache_file(self, url: str) -> Path:
         digest = hashlib.sha1(url.encode("utf-8"), usedforsecurity=False).hexdigest()
         return self._paths.cache / "repos" / f"{digest}.json"
 
     def _fetch_json(self, url: str) -> object:
-        """Fetch live (and cache the raw body); fall back to cache on network errors."""
+        pass
         try:
             body = self._fetch_bytes(url)
         except WispError as exc:
@@ -192,7 +192,7 @@ class RepoClient:
 
     @contextmanager
     def _open_https(self, url: str) -> Iterator[httpx.Response]:
-        """Stream a GET, following redirects manually so every hop must be https."""
+        pass
         try:
             for _ in range(MAX_REDIRECTS + 1):
                 if not is_https(url):
@@ -242,7 +242,7 @@ class RepoClient:
         except (OSError, WispError):
             return None
 
-    # --- downloading -------------------------------------------------
+
 
     def download(
         self,
@@ -250,7 +250,7 @@ class RepoClient:
         dest_dir: Path,
         on_progress: Callable[[int, int | None], None],
     ) -> Path:
-        """Download into a new file in ``dest_dir``; existing files are never touched."""
+        pass
         if not is_https(app.download_url):
             raise WispError("error.url_not_https")
         try:
@@ -264,7 +264,7 @@ class RepoClient:
         final, part = _reserve(dest_dir, stem)
         try:
             self._stream_to(app.download_url, part, on_progress)
-            part.replace(final)  # replaces only our own empty placeholder
+            part.replace(final)
         except BaseException as exc:
             part.unlink(missing_ok=True)
             final.unlink(missing_ok=True)

@@ -1,4 +1,4 @@
-"""Desktop entry point: wiring, emit guard, drop handler, stale sweep."""
+pass
 
 import _winapi
 import json
@@ -92,7 +92,7 @@ def test_emit_before_attach_and_after_close_is_silent():
 def test_emit_swallows_window_errors():
     emitter = app.Emitter()
     emitter.attach(FakeWindow(fail=True))
-    emitter({"type": "library_changed"})  # must not raise
+    emitter({"type": "library_changed"})
 
 
 class StubApi:
@@ -152,7 +152,7 @@ def test_sweep_removes_old_dirs_and_keeps_fresh_and_foreign(tmp_paths, tmp_path)
         (work / name).mkdir(parents=True)
     (work / "ab12" / "f.txt").write_text("x")
     (work / "file").write_text("x")
-    (work / "cd34").write_text("x")  # a file with a work-dir name
+    (work / "cd34").write_text("x")
     for name in ("ab12", "abc", "abcde", "ZZ99"):
         _age(work / name, 7)
     signed = tmp_paths.cache / "signed"
@@ -175,7 +175,7 @@ def test_sweep_removes_old_dirs_and_keeps_fresh_and_foreign(tmp_paths, tmp_path)
 def test_sweep_does_not_follow_junction_named_like_work_dir(
     tmp_paths, tmp_path, monkeypatch
 ):
-    monkeypatch.setattr(app, "STALE_AFTER_SECONDS", -1)  # everything counts as old
+    monkeypatch.setattr(app, "STALE_AFTER_SECONDS", -1)
     work = tmp_path / "WS"
     work.mkdir()
     outside = tmp_path / "outside"
@@ -185,7 +185,7 @@ def test_sweep_does_not_follow_junction_named_like_work_dir(
     app.sweep_stale(tmp_paths, work)
 
     assert (outside / "keep.txt").exists()
-    assert not (work / "ab12").exists()  # the link itself is removed
+    assert not (work / "ab12").exists()
 
 
 def test_sweep_skips_linked_work_root(tmp_paths, tmp_path):

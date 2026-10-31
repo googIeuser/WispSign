@@ -18,7 +18,7 @@ describe('runJob', () => {
     const done: JobEvent = { job: 'fast1', type: 'done', result: { n: 1 } }
     installBridge({
       repos_refresh: async () => {
-        dispatchEvent(done) // the event beats the id
+        dispatchEvent(done)
         return ok('fast1')
       },
       job_result: async () => ok(null),
@@ -59,7 +59,7 @@ describe('runJob', () => {
 
 describe('call readiness', () => {
   test('waits for a late-attached method after pywebviewready', async () => {
-    const api: Api = {} // pywebview creates the api object empty
+    const api: Api = {}
     window.pywebview = { api }
     const pending = call<string>('settings_get')
     setTimeout(() => {
@@ -107,7 +107,7 @@ describe('dispatchEvent', () => {
     const offLib = onLibraryChanged(lib)
     const event = { type: 'library_changed', added: 1, ignored: 0, unresolved: 0, errors: [] }
     dispatchEvent(event)
-    dispatchEvent({ type: 'library_changed' }) // malformed: ignored
+    dispatchEvent({ type: 'library_changed' })
     expect(lib).toHaveBeenCalledTimes(1)
     expect(lib).toHaveBeenCalledWith(event)
     expect(job).not.toHaveBeenCalled()
@@ -149,12 +149,12 @@ describe('runJob failures', () => {
       job_result: async () => ok({ job: 'late1', type: 'done', result: 1 }),
     })
     await expect(runJob('m')).resolves.toBe(1)
-    // A second runJob reusing the id must not see the stale terminal event.
+
     dispatchEvent({ job: 'late1', type: 'error', error: { code: 'x', params: {}, detail: '' } })
     installBridge({ m: async () => ok('late1'), job_result: async () => ok(null) })
     const second = runJob('m').then(seen, seen)
     await new Promise((r) => setTimeout(r, 10))
-    expect(seen).not.toHaveBeenCalled() // still pending: stale event was dropped
+    expect(seen).not.toHaveBeenCalled()
     void second
   })
 })

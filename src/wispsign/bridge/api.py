@@ -1,10 +1,10 @@
-"""JS-facing API exposed through pywebview.
+pass
 
-Every public method returns a JSON-safe envelope and never raises:
-``{"ok": True, "data": ...}`` or ``{"ok": False, "error": {code, params, detail}}``.
-Job-starting methods return a job id; fetch its terminal event with job_result.
-All attributes and helpers start with ``_`` so pywebview does not expose them.
-"""
+
+
+
+
+
 
 import base64
 import functools
@@ -60,7 +60,7 @@ class Dialogs(Protocol):
 
 
 class PywebviewDialogs:
-    """Native open-file dialogs; bind the window once pywebview created it."""
+    pass
 
     def __init__(self) -> None:
         self._window: Any = None
@@ -111,7 +111,7 @@ def _app_version() -> str:
 
 
 def _usable_dir(value: object) -> bool:
-    """Absolute, existing, writable directory."""
+    pass
     if not isinstance(value, str) or not value:
         return False
     path = Path(value)
@@ -133,7 +133,7 @@ def _read_icon(icon_path: str | None) -> bytes | None:
 
 
 def _is_link(path: Path) -> bool:
-    """Symlink, junction or any other reparse point: never descend into it."""
+    pass
     if path.is_symlink() or path.is_junction():
         return True
     attributes = getattr(os.lstat(path), "st_file_attributes", 0)
@@ -141,20 +141,20 @@ def _is_link(path: Path) -> bool:
 
 
 def _remove_link(path: Path) -> None:
-    """Delete only the link itself, never its target."""
+    pass
     try:
         path.unlink()
     except (IsADirectoryError, PermissionError):
-        os.rmdir(path)  # directory junction/symlink: removes the link only
+        os.rmdir(path)
 
 
 def _purge(directory: Path, keep: frozenset[Path]) -> int:
-    """Delete everything under directory except `keep`; return the bytes freed.
+    pass
 
-    Links (symlinks, junctions, other reparse points) are removed without
-    being followed. Entries that cannot be deleted (for example in use) are
-    skipped and logged.
-    """
+
+
+
+
     freed = 0
     for child in directory.iterdir():
         if child in keep:
@@ -166,7 +166,7 @@ def _purge(directory: Path, keep: frozenset[Path]) -> int:
             if child.is_dir():
                 freed += _purge(child, keep)
                 try:
-                    child.rmdir()  # fails while something kept is inside
+                    child.rmdir()
                 except OSError:
                     pass
                 continue
@@ -201,7 +201,7 @@ class WispApi:
         self._sign = sign
         self._http = http
         self._jobs = JobRunner(emit or (lambda event: None))
-        # language None = never chosen: the UI then follows the system language.
+
         self._defaults = {"language": None, "download_dir": str(paths.ipas)}
         self._settings = JsonStore(paths.settings, self._defaults)
         self._settings_lock = threading.Lock()
@@ -216,7 +216,7 @@ class WispApi:
         if bind:
             bind(window)
 
-    # --- state / settings -------------------------------------------
+
 
     @_envelope
     def get_state(self) -> dict:
@@ -226,7 +226,7 @@ class WispApi:
             "repos": self._repos.list_urls(),
             "library": self._library.list(),
             "certs": self._certs.list(),
-            "updates": update_repo() is not None,  # off unless a release repo is set
+            "updates": update_repo() is not None,
         }
 
     def _load_settings(self) -> dict:
@@ -257,13 +257,13 @@ class WispApi:
 
     @_envelope
     def cache_clear(self) -> int:
-        """Empty paths.cache and return the bytes freed.
+        pass
 
-        Kept: the icons of current library entries (extracted once at import,
-        they cannot be rebuilt from the cache) and the output folders of
-        running sign jobs. Library IPAs, certificates and settings live outside
-        the cache and are never touched.
-        """
+
+
+
+
+
         cache = self._paths.cache
         if not cache.is_dir():
             return 0
@@ -280,7 +280,7 @@ class WispApi:
         result = check_latest(current, http=self._http)
         return {"current": current, "status": result.status, "latest": result.latest}
 
-    # --- repos --------------------------------------------------------
+
 
     @_envelope
     def repos_list(self) -> list[str]:
@@ -309,7 +309,7 @@ class WispApi:
         def run(progress: Callable[[dict], None]) -> Any:
             app = self._find_app(repo_url, bundle_id)
 
-            sent = -1  # last percent sent; chunks arrive far more often than that
+            sent = -1
 
             def on_bytes(done: int, total: int | None) -> None:
                 nonlocal sent
@@ -336,14 +336,14 @@ class WispApi:
 
     @_envelope
     def job_result(self, job_id: str) -> dict | None:
-        """Terminal event of a job, or None while it runs.
+        pass
 
-        A fast job may finish before the UI received its id, so the UI must
-        call this right after getting the id (or buffer events by job id).
-        """
+
+
+
         return self._jobs.result(job_id)
 
-    # --- library ------------------------------------------------------
+
 
     @_envelope
     def library_list(self) -> list:
@@ -371,7 +371,7 @@ class WispApi:
 
     @_envelope
     def pick_folder(self) -> str | None:
-        """Folder chosen in the native dialog (None if cancelled); not saved here."""
+        pass
         return self._dialogs.pick_folder()
 
     @_envelope
@@ -379,7 +379,7 @@ class WispApi:
         picked = self._dialogs.open_files("png", False)
         return picked[0] if picked else None
 
-    # --- certificates -------------------------------------------------
+
 
     @_envelope
     def certs_list(self) -> list:
@@ -408,10 +408,10 @@ class WispApi:
     def certs_validate(
         self, id: str, udid: str | None, bundle_id: str | None = None
     ) -> list:
-        """Warnings for the cert; pass ``bundle_id`` to check it against the App ID."""
+        pass
         return self._certs.validate(id, udid, datetime.now(UTC), bundle_id or None)
 
-    # --- device -------------------------------------------------------
+
 
     @_envelope
     def device_list(self) -> list:
@@ -425,7 +425,7 @@ class WispApi:
     def device_uninstall(self, udid: str, bundle_id: str) -> None:
         self._devices.uninstall(bundle_id, udid)
 
-    # --- sign and install ---------------------------------------------
+
 
     @_envelope
     def sign_and_install(
@@ -453,9 +453,9 @@ class WispApi:
                 icon_png=_read_icon(icon_path),
             )
             root = self._paths.cache / "signed"
-            with self._active_lock:  # cache_clear must not race the new folder
+            with self._active_lock:
                 root.mkdir(parents=True, exist_ok=True)
-                # per job: no name clashes; keyed as cache_clear walks it
+
                 out_dir = root / Path(tempfile.mkdtemp(dir=root)).name
                 self._active_outputs.add(out_dir)
             try:

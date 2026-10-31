@@ -1,4 +1,4 @@
-/** Bridge client: typed calls over window.pywebview.api and job event plumbing. */
+
 
 export type WispErr = { code: string; params: Record<string, unknown>; detail: string }
 export type Result<T> = { ok: true; data: T } | { ok: false; error: WispErr }
@@ -11,7 +11,7 @@ export type JobEvent = {
   error?: WispErr
 }
 
-/** Broadcast by the host after it handled a native file drop. */
+
 export type LibraryChangedEvent = {
   type: 'library_changed'
   added: number
@@ -39,7 +39,7 @@ const failure = (code: string, detail = ''): Result<never> => ({
   error: { code, params: {}, detail },
 })
 
-// --- events -----------------------------------------------------------
+
 
 const handlers = new Set<(e: JobEvent) => void>()
 
@@ -69,7 +69,7 @@ function isLibraryChanged(value: unknown): value is LibraryChangedEvent {
   return e.type === 'library_changed' && typeof e.added === 'number' && Array.isArray(e.errors)
 }
 
-/** Deliver a bridge event to every handler; malformed events are ignored. */
+
 export function dispatchEvent(event: unknown): void {
   if (isLibraryChanged(event)) {
     for (const handler of [...libraryHandlers]) {
@@ -93,18 +93,18 @@ export function dispatchEvent(event: unknown): void {
 
 if (typeof window !== 'undefined') window.__wisp = dispatchEvent
 
-// --- backend ----------------------------------------------------------
+
 
 let mockBackend: Promise<Backend> | null = null
 
 const apiHas = (method: string): boolean =>
   typeof window.pywebview?.api?.[method] === 'function'
 
-/**
- * pywebview creates window.pywebview.api early as an empty object, attaches
- * the methods (js/api.js _createApi) and then fires `pywebviewready`
- * (js/finish.js). Wait until the requested method really exists.
- */
+
+
+
+
+
 async function resolveBackend(method: string): Promise<Backend | null> {
   if (isMock) {
     mockBackend ??= import('./mockApi').then(
@@ -140,7 +140,7 @@ export function call<T>(method: string, ...args: unknown[]): Promise<Result<T>> 
   })
 }
 
-// --- jobs ---------------------------------------------------------------
+
 
 export class JobError extends Error {
   readonly error: WispErr
@@ -150,10 +150,10 @@ export class JobError extends Error {
   }
 }
 
-/** Events that arrived for job ids no runJob knows yet (fast jobs). */
+
 const orphanEvents = new Map<string, JobEvent[]>()
 const watchers = new Map<string, (e: JobEvent) => void>()
-/** Ids of jobs runJob already settled; their late events are dropped. */
+
 const settledIds = new Set<string>()
 const MAX_SETTLED_IDS = 200
 
@@ -176,11 +176,11 @@ onEvent((event) => {
   }
 })
 
-/**
- * Start a job method and resolve with its result. Safe against jobs that
- * finish before the id reaches JS: buffered events are replayed and the
- * terminal event is also fetched with job_result(id).
- */
+
+
+
+
+
 export async function runJob<T = unknown>(
   method: string,
   args: unknown[] = [],

@@ -188,7 +188,7 @@ def test_list_reports_broken_cert_without_touching_it(tmp_paths, raw):
     assert good in listed and good.broken is False
     (broken,) = [r for r in listed if r.broken]
     assert broken.id == "0123456789ab"
-    if raw is not None:  # never renamed aside: the user decides
+    if raw is not None:
         assert (folder / "meta.json").read_bytes() == raw
     assert not list(folder.glob("meta.json.corrupt-*"))
     s.remove(broken.id)
@@ -233,5 +233,5 @@ def test_validate_warns_when_app_id_does_not_match(
         else []
     )
     assert warnings == expected
-    assert s.validate(rec.id, "AAA", datetime.now(UTC)) == []  # no bundle: no check
+    assert s.validate(rec.id, "AAA", datetime.now(UTC)) == []
     assert "warn.app_id_mismatch" in WARN_CODES

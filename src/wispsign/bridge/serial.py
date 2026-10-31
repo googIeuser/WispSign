@@ -1,4 +1,4 @@
-"""JSON-safe conversion shared by the bridge."""
+pass
 
 import dataclasses
 from datetime import UTC, datetime
@@ -7,7 +7,7 @@ from typing import Any
 
 
 def jsonable(value: Any) -> Any:
-    """Convert dataclasses, datetimes, paths and tuples into JSON-safe values."""
+    pass
     if dataclasses.is_dataclass(value) and not isinstance(value, type):
         return {
             f.name: jsonable(getattr(value, f.name)) for f in dataclasses.fields(value)

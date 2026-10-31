@@ -121,10 +121,10 @@ test('certificates show cards with push status', async ({ page }) => {
   await expect(page.getByText('Ana sertifika')).toBeVisible()
   await expect(page.getByText('Yedek (pushsuz)')).toBeVisible()
   await page.getByText('Yedek (pushsuz)').click()
-  // The card and the warning count the same days with the same clock.
+
   await expect(page.getByRole('option', { name: /Yedek/ }).getByText('3 gün kaldı')).toBeVisible()
   await expect(page.locator('#detail').getByText('3 gün içinde sona erecek', { exact: false })).toBeVisible()
-  // Explicit all-device permission covers the connected device.
+
   const enterprise = page.getByRole('option', { name: /Kurumsal/ })
   await expect(enterprise.getByText('tüm cihazlar')).toBeVisible()
   await expect(enterprise.getByText('bu iPhone kayıtlı', { exact: true })).toBeVisible()

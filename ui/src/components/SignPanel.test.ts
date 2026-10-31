@@ -117,7 +117,7 @@ test('a changed value stays and is marked when advanced options are collapsed', 
   name.value = 'Kendi Adım'
   name.dispatchEvent(new Event('input', { bubbles: true }))
   flushSync()
-  openAdvanced() // collapse
+  openAdvanced()
   expect(advancedToggle().getAttribute('aria-expanded')).toBe('false')
   expect(advancedToggle().textContent).toContain('özelleştirildi')
   openAdvanced()

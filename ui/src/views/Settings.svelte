@@ -18,7 +18,7 @@
   ]
 
   let version = $state('')
-  let updatesEnabled = $state(false) // the build has a release repo to check
+  let updatesEnabled = $state(false)
   let dir = $state('')
   let savedDir = $state('')
   let dirError = $state<string | null>(null)
@@ -57,7 +57,7 @@
     const res = await call<string | null>('pick_folder')
     if (!res.ok) return (saveError = res.error)
     if (!res.data) return
-    dir = res.data // still validated and saved with "Kaydet"
+    dir = res.data
     dirError = null
   }
 

@@ -1,8 +1,8 @@
-"""Backend error type and mapping of raw exceptions to i18n error codes."""
+pass
 
 import re
 
-# Codes that exist so far; later tasks append their own.
+
 ERROR_CODES: tuple[str, ...] = (
     "error.identifier_mismatch",
     "error.signature_invalid",

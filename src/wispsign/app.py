@@ -1,4 +1,4 @@
-"""Desktop entry point: pywebview window hosting the Svelte UI over WispApi."""
+pass
 
 import argparse
 import json
@@ -26,12 +26,12 @@ WINDOW_SIZE = (1280, 800)
 MIN_SIZE = (1024, 680)
 BACKGROUND = "#0b0b0b"
 _WORK_DIR_NAME = re.compile(r"[a-z0-9]{4}")
-# A second running instance may own a fresh work dir; only older ones are stale.
+
 STALE_AFTER_SECONDS = 6 * 60 * 60
 
 
 def ui_index_path() -> Path:
-    """index.html of the built UI (PyInstaller bundle or the source checkout)."""
+    pass
     bundle = getattr(sys, "_MEIPASS", None)
     if bundle:
         return Path(bundle) / "ui" / "index.html"
@@ -39,7 +39,7 @@ def ui_index_path() -> Path:
 
 
 class Emitter:
-    """Pushes events to the UI; silent while the window is absent or closed."""
+    pass
 
     def __init__(self) -> None:
         self._window: Any = None
@@ -65,7 +65,7 @@ class Emitter:
 
 
 def handle_drop(api: Any, emit: Callable[[dict], None], event: Any) -> None:
-    """Add dropped .ipa files (full paths come from pywebview) and tell the UI."""
+    pass
     try:
         files = event["dataTransfer"]["files"]
     except (KeyError, TypeError):
@@ -122,7 +122,7 @@ def _work_root() -> Path | None:
 
 
 def sweep_stale(paths: AppPaths, work_root: Path | None = None) -> None:
-    """Delete sign leftovers of crashed runs older than 6 hours. Best effort."""
+    pass
     root = work_root or _work_root()
     signed = paths.cache / "signed"
     now = time.time()
@@ -144,7 +144,7 @@ def sweep_stale(paths: AppPaths, work_root: Path | None = None) -> None:
 
 
 def register_drop(window: Any, handler: DOMEventHandler) -> None:
-    """Attach the document drop handler once; failures are logged, not raised."""
+    pass
     try:
         drop = window.dom.document.events.drop
         if handler in getattr(drop, "_items", ()):

@@ -1,4 +1,4 @@
-; Inno Setup script for WispSign. Build with: iscc /DAppVersion=0.1.0 packaging\installer.iss
+
 #ifndef AppVersion
   #define AppVersion "0.1.0"
 #endif
@@ -24,14 +24,14 @@ PrivilegesRequiredOverridesAllowed=dialog
 WizardStyle=modern
 
 [Files]
-Source: "..\dist\WispSign\*"; DestDir: "{app}"; Flags: recursesubdirs ignoreversion createallsubdirs
+Source: "..\dist\WispSign\*"
 
 [Icons]
-Name: "{group}\WispSign"; Filename: "{app}\WispSign.exe"
-Name: "{autodesktop}\WispSign"; Filename: "{app}\WispSign.exe"; Tasks: desktopicon
+Name: "{group}\WispSign"
+Name: "{autodesktop}\WispSign"
 
 [Tasks]
-Name: "desktopicon"; Description: "Create a desktop shortcut"; Flags: unchecked
+Name: "desktopicon"
 
 [Run]
-Filename: "{app}\WispSign.exe"; Description: "Launch WispSign"; Flags: nowait postinstall skipifsilent
+Filename: "{app}\WispSign.exe"

@@ -1,4 +1,4 @@
-"""Parse untrusted AltStore / legacy source JSON into Repo values."""
+pass
 
 from typing import TypeGuard
 from urllib.parse import urlparse
@@ -32,7 +32,7 @@ def _size(value: object) -> int | None:
 
 
 def _release(raw: dict) -> dict:
-    """Newest release: AltStore versions[0], else legacy fields on the app."""
+    pass
     versions = raw.get("versions")
     if isinstance(versions, list) and versions and isinstance(versions[0], dict):
         return versions[0]
@@ -67,7 +67,7 @@ def parse_source(url: str, data: object) -> Repo:
     if not isinstance(data, dict) or not isinstance(data.get("apps"), list):
         raise WispError("error.repo_invalid")
     apps = [_parse_app(url, raw) for raw in data["apps"]]
-    # One app per bundle ID: the first wins, later duplicates count as skipped.
+
     unique: dict[str, RepoApp] = {}
     for app in apps:
         if app is not None and app.bundle_id not in unique:

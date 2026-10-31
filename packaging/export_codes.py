@@ -1,4 +1,4 @@
-"""Write ui/src/lib/codes.json: every backend error.* and warn.* i18n code."""
+pass
 
 import json
 from pathlib import Path

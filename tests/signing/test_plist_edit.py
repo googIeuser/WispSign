@@ -90,7 +90,7 @@ def _assert_points_at_new_icons(app):
     ipad = info["CFBundleIcons~ipad"]["CFBundlePrimaryIcon"]
     assert ipad["CFBundleIconFiles"] == ["WispIcon60x60", "WispIcon76x76"]
     assert info["CFBundleIconFiles"] == ["WispIcon60x60", "WispIcon76x76"]
-    for holder in (info, primary, ipad):  # an icon name would win over the files
+    for holder in (info, primary, ipad):
         assert "CFBundleIconName" not in holder
     assert read_info(app).icon_png == NEW_ICON
 
@@ -103,7 +103,7 @@ def test_overrides_icon_on_legacy_icon_files(tmp_path):
 
 
 def test_overrides_icon_on_asset_catalog_app(tmp_path):
-    # Modern Xcode output: icon only in Assets.car, named by CFBundleIconName.
+
     app = make_app(tmp_path)
     (app / "AppIcon60x60@2x.png").unlink()
     (app / "Assets.car").write_bytes(b"car")
@@ -120,7 +120,7 @@ def test_overrides_icon_on_asset_catalog_app(tmp_path):
     apply_overrides(app, name=None, bundle_id=None, icon_png=NEW_ICON)
     _assert_points_at_new_icons(app)
     alternate = _info(app)["CFBundleIcons"]["CFBundleAlternateIcons"]
-    assert alternate == {"Dark": {"CFBundleIconName": "Dark"}}  # left alone
+    assert alternate == {"Dark": {"CFBundleIconName": "Dark"}}
     assert (app / "Assets.car").read_bytes() == b"car"
 
 
@@ -135,7 +135,7 @@ def test_overrides_icon_without_any_icon_keys(tmp_path):
 
 def test_overrides_icon_that_cannot_be_written_is_an_error(tmp_path):
     app = make_app(tmp_path)
-    (app / "WispIcon60x60@2x.png").mkdir()  # blocks the write
+    (app / "WispIcon60x60@2x.png").mkdir()
     with pytest.raises(WispError) as err:
         apply_overrides(app, name=None, bundle_id=None, icon_png=NEW_ICON)
     assert err.value.code == "error.icon_invalid"

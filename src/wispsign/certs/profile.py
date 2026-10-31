@@ -1,4 +1,4 @@
-"""Parse .mobileprovision files (CMS SignedData wrapping an XML plist)."""
+pass
 
 import plistlib
 from dataclasses import dataclass
@@ -16,7 +16,7 @@ class ProfileInfo:
     name: str
     uuid: str
     team_id: str
-    app_id: str  # excludes the team prefix
+    app_id: str
     is_wildcard: bool
     has_push: bool
     app_groups: tuple[str, ...]

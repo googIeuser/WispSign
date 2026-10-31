@@ -1,9 +1,9 @@
-"""Safe IPA extraction and packing.
+pass
 
-All member names are validated before anything is written; on failure the
-files and directories created by the call are removed again. Files are written
-with the Windows long-path prefix so deeply nested bundles do not hit MAX_PATH.
-"""
+
+
+
+
 
 import errno
 import os
@@ -26,12 +26,12 @@ _PAYLOAD = "Payload"
 _BAD_CHARS = frozenset('<>:"|?*')
 
 
-_LONG = chr(92) * 2 + "?" + chr(92)  # the extended-length prefix
+_LONG = chr(92) * 2 + "?" + chr(92)
 _UNC = chr(92) * 2
 
 
 def long_path(path: Path | str) -> str:
-    """Absolute path string, with the extended-length prefix on Windows."""
+    pass
     absolute = os.path.abspath(path)
     if os.name != "nt" or absolute.startswith(_LONG):
         return absolute
@@ -61,7 +61,7 @@ def _validate_member(info: zipfile.ZipInfo) -> list[str]:
 
 
 def _check_collisions(entries: list[tuple[zipfile.ZipInfo, list[str]]]) -> None:
-    """Reject archives where one name is both a file and a directory."""
+    pass
     files: set[tuple[str, ...]] = set()
     dirs: set[tuple[str, ...]] = set()
     for info, parts in entries:
@@ -89,7 +89,7 @@ def _find_app(entries: list[tuple[zipfile.ZipInfo, list[str]]]) -> str:
 
 
 class _Created:
-    """Tracks what one extraction created so it can be rolled back."""
+    pass
 
     def __init__(self) -> None:
         self.dirs: list[str] = []
@@ -123,7 +123,7 @@ class _Created:
 
 
 def safe_extract(ipa: Path, dest: Path, max_total: int = 4 * 1024**3) -> Path:
-    """Extract Payload/ of ``ipa`` into ``dest`` and return the ``.app`` path."""
+    pass
     try:
         archive = zipfile.ZipFile(ipa)
     except (zipfile.BadZipFile, OSError) as exc:
@@ -187,7 +187,7 @@ def _is_macho(path: str) -> bool:
 
 
 def pack_ipa(app_dir: Path, out: Path) -> Path:
-    """Zip ``app_dir`` as ``Payload/<name>.app/...`` (deflate level 1)."""
+    pass
     root = long_path(app_dir)
     prefix = f"{_PAYLOAD}/{app_dir.name}"
     with zipfile.ZipFile(

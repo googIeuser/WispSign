@@ -41,7 +41,7 @@ def _named(name: str) -> type[Exception]:
     ],
 )
 def test_pairing_exceptions_map_to_untrusted(name):
-    # pymobiledevice3 raises these with an empty message: the class name decides.
+
     assert map_error(_named(name)()).code == "error.device_untrusted"
 
 

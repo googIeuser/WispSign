@@ -21,7 +21,7 @@ def _names(dists):
 def test_runtime_closure_is_recursive_and_skips_dev_tools(third_party):
     names = _names(third_party.runtime_closure())
     assert {"pymobiledevice3", "pywebview", "cryptography", "httpx"} <= names
-    assert {"construct", "httpcore", "cffi"} <= names  # transitive
+    assert {"construct", "httpcore", "cffi"} <= names
     assert names.isdisjoint({"wispsign", "pytest", "pytest-cov", "ruff", "pyinstaller"})
 
 

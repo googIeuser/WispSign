@@ -12,7 +12,7 @@
   let { app, repoName }: Props = $props()
 
   const job = $derived($jobs[downloadKey(app)])
-  // From the library itself, so removing the IPA brings the button back.
+
   const inLibrary = $derived(
     $library.some((e) => e.source === app.repo_url && e.bundle_id === app.bundle_id),
   )

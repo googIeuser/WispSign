@@ -96,7 +96,7 @@ class FakeRepos:
     def download(self, app, dest_dir, on_progress):
         for done, total in self.progress:
             on_progress(done, total)
-        self.downloads += 1  # like RepoClient: every download is a new file
+        self.downloads += 1
         return make_ipa(self.tmp_path / f"dl{self.downloads}")
 
 
@@ -412,7 +412,7 @@ def test_sign_and_install_passes_overrides_and_deletes_output(
         PNG_1X1,
         cert.id,
     )
-    assert not backend.installed[0][0].exists()  # signed copy removed
+    assert not backend.installed[0][0].exists()
     entry = api.library_list()["data"][0]
     assert entry["id"] == eid and (tmp_paths.ipas / entry["path"]).exists()
 
@@ -452,7 +452,7 @@ def test_sign_and_install_bad_icon(api, events, entry_id, cert, tmp_path):
 
 
 def test_settings(api, tmp_path):
-    assert api.settings_get()["data"]["language"] is None  # unset: UI detects it
+    assert api.settings_get()["data"]["language"] is None
     assert api.settings_set({"language": "en"})["data"]["language"] == "en"
     assert api.settings_get()["data"]["language"] == "en"
     got = api.settings_set({"download_dir": str(tmp_path)})
@@ -576,12 +576,12 @@ def test_pywebview_folder_dialog():
     import webview
 
     dialogs = PywebviewDialogs()
-    assert dialogs.pick_folder() is None  # no window yet
+    assert dialogs.pick_folder() is None
     window = _FolderWindow(("C:/Downloads",))
     dialogs.bind_window(window)
     assert dialogs.pick_folder() == "C:/Downloads"
     assert window.kinds == [webview.FOLDER_DIALOG]
-    window.picked = None  # cancelled
+    window.picked = None
     assert dialogs.pick_folder() is None
 
 
@@ -594,7 +594,7 @@ def test_jsonable_converts_types():
     assert jsonable({"a": (stamp, Path("x"))}) == {"a": ["2026-01-02T03:04:05Z", "x"]}
 
 
-# --- fix round 1 ---------------------------------------------------------
+
 
 
 def test_job_result_available_for_fast_job(api, events):

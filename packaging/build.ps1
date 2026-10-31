@@ -1,5 +1,5 @@
-# Build WispSign: zsign -> error codes -> notices -> UI -> PyInstaller -> installer.
-# Outputs: dist\WispSign\WispSign.exe and dist\WispSign-Setup-<version>.exe
+
+
 $ErrorActionPreference = "Stop"
 $root = Split-Path -Parent $PSScriptRoot
 Set-Location $root

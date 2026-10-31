@@ -1,4 +1,4 @@
-/** Transient notifications shown by Toast.svelte. */
+
 import { writable } from 'svelte/store'
 import type { WispErr } from './api'
 

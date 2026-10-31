@@ -20,7 +20,7 @@
     let stale = false
     warnings = []
     validateError = null
-    if (cert.broken) return // unreadable record: nothing to validate
+    if (cert.broken) return
     void call<Warning[]>('certs_validate', cert.id, connectedUdid).then((res) => {
       if (stale) return
       if (res.ok) warnings = res.data

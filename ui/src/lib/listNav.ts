@@ -1,4 +1,4 @@
-/** Keyboard movement for single-select lists (role=listbox). */
+
 
 export function nextIndex(key: string, current: number, length: number): number | null {
   if (length === 0) return null
@@ -19,7 +19,7 @@ export function nextIndex(key: string, current: number, length: number): number 
   }
 }
 
-/** Make list keys unique: later duplicates get a `#n` suffix (keyed each blocks need it). */
+
 export function uniqueKeys(keys: string[]): string[] {
   const seen = new Set(keys)
   const used = new Set<string>()

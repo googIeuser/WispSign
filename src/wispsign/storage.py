@@ -1,4 +1,4 @@
-"""Atomic JSON persistence."""
+pass
 
 import copy
 import json
@@ -14,7 +14,7 @@ _REPLACE_DELAY_S = 0.01
 
 
 def _replace_with_retry(src: str, dst: Path) -> None:
-    """os.replace, retrying while Windows has the target briefly locked."""
+    pass
     for attempt in range(_REPLACE_ATTEMPTS):
         try:
             os.replace(src, dst)
@@ -45,7 +45,7 @@ class JsonStore:
     def save(self, data: Any) -> None:
         self._path.parent.mkdir(parents=True, exist_ok=True)
         text = json.dumps(data, indent=2, ensure_ascii=False)
-        # Unique temp name: concurrent saves must not interleave in one file.
+
         fd, name = tempfile.mkstemp(
             dir=self._path.parent, prefix=self._path.name + ".", suffix=".tmp"
         )
@@ -58,7 +58,7 @@ class JsonStore:
             raise
 
     def _set_aside(self) -> Any:
-        """Corrupt file: keep it under a new name, continue with the default."""
+        pass
         self._quarantine()
         return copy.deepcopy(self._default)
 

@@ -301,7 +301,7 @@ def test_download_never_overwrites_user_files(client, tmp_path):
     app = _ipa_app(client)
     dest = tmp_path / "dl"
     user_ipa = client.download(app, dest, lambda done, total: None)
-    user_ipa.write_bytes(b"user ipa")  # now stands for a file the user put there
+    user_ipa.write_bytes(b"user ipa")
     user_part = dest / (user_ipa.name.removesuffix(".ipa") + "-2.ipa.part")
     user_part.write_bytes(b"user part")
     path = client.download(app, dest, lambda done, total: None)
@@ -327,7 +327,7 @@ SEVEN_HOURS = 7 * 60 * 60
 
 
 def _leftover(client, dest, ipa_bytes=b"", part_bytes=b"partial", age=SEVEN_HOURS):
-    """The pair a hard-killed download leaves: placeholder ``.ipa`` + ``.ipa.part``."""
+    pass
     name = client.download(_ipa_app(client), dest, lambda d, t: None)
     name.unlink()
     part = name.with_name(name.name + ".part")
@@ -351,8 +351,8 @@ def test_download_clears_a_stale_crashed_reservation(client, tmp_path):
 @pytest.mark.parametrize(
     "kwargs",
     [
-        {"age": 60},  # a download that may still be running
-        {"ipa_bytes": b"a real file"},  # never delete a non-empty .ipa
+        {"age": 60},
+        {"ipa_bytes": b"a real file"},
     ],
 )
 def test_download_keeps_reservations_that_may_not_be_leftovers(
@@ -380,7 +380,7 @@ def test_overlapping_downloads_use_separate_files(client, tmp_path):
     inner: list[Path] = []
 
     def start_second_download(done, total):
-        if not inner:  # a second download of the same app while the first runs
+        if not inner:
             inner.append(client.download(app, dest, lambda d, t: None))
 
     outer = client.download(app, dest, start_second_download)

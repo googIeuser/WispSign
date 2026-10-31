@@ -27,7 +27,7 @@ def test_parse_legacy_format():
     repo = parse_source(URL, load("legacy.json"))
     assert repo.apps[0].bundle_id == "com.example.legacy"
     assert repo.apps[0].size == 4096
-    assert repo.apps[0].icon_url is None  # http icon dropped
+    assert repo.apps[0].icon_url is None
 
 
 def test_parse_skips_invalid_apps_and_http_urls():

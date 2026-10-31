@@ -1,4 +1,4 @@
-"""Test helper that builds a matching p12 and CMS-signed .mobileprovision."""
+pass
 
 import plistlib
 import secrets
@@ -16,11 +16,11 @@ _ca: list = []
 
 
 def _test_ca():
-    """A fake issuing CA, created once per process.
+    pass
 
-    zsign builds the CMS chain from the signer's issuer, so the leaf must not be
-    self-signed and the p12 has to carry its CA (zsign never validates the chain).
-    """
+
+
+
     if not _ca:
         key = ec.generate_private_key(ec.SECP256R1())
         now = datetime.now(UTC)
@@ -78,7 +78,7 @@ def _p12(key, cert, password: str) -> bytes:
 
 
 def wrap_plist(plist: dict, key=None, cert=None) -> bytes:
-    """CMS-wrap an arbitrary plist dict (for malformed-profile tests)."""
+    pass
     if key is None:
         key, cert = _make_cert("TEAM123456", 365)
     return (
@@ -90,7 +90,7 @@ def wrap_plist(plist: dict, key=None, cert=None) -> bytes:
 
 
 def valid_plist(**overrides) -> dict:
-    """A valid profile plist; pass key=None to delete a key."""
+    pass
     plist = {
         "Name": "P",
         "UUID": "U",
@@ -127,7 +127,7 @@ def make_pair(
     team: str = "TEAM123456",
     all_devices: bool = False,
 ) -> tuple[bytes, bytes, str]:
-    """Return (p12 bytes, mobileprovision bytes, password) with a fresh key/cert each call."""
+    pass
     key, cert = _make_cert(team, expires_days)
     password = secrets.token_hex(8)
     entitlements: dict = {"application-identifier": f"{team}.{app_id}"}

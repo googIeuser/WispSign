@@ -1,9 +1,9 @@
-"""Download the pinned zsign release into vendor/zsign/zsign.exe.
+pass
 
-The release zip is verified against a pinned SHA-256 before anything is
-extracted; a mismatch exits with status 1. Re-running is cheap: a cached zip
-with the right hash is reused and an up-to-date zsign.exe is left alone.
-"""
+
+
+
+
 
 import hashlib
 import io
@@ -40,7 +40,7 @@ def _archive_bytes() -> bytes:
 
 
 def _extract_exe(data: bytes) -> bytes:
-    """Read zsign.exe from the already-verified bytes, never from disk again."""
+    pass
     with zipfile.ZipFile(io.BytesIO(data)) as archive:
         return archive.read(EXE_NAME)
 

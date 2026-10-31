@@ -1,12 +1,12 @@
-/// <reference types="node" />
+
 import { readFileSync } from 'node:fs'
 import { expect, test } from 'vitest'
 
-// Read from disk: Vitest stubs CSS imports (even ?raw) to an empty string, and under jsdom
-// import.meta.url is not a file URL, so resolve from the ui/ root that Vitest runs in.
+
+
 const css = readFileSync('src/lib/theme.css', 'utf8')
 
-// WCAG 2.x AA for normal-size text.
+
 const AA = 4.5
 
 function token(name: string): string {

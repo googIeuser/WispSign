@@ -115,7 +115,7 @@ def test_remove_deletes_file_and_entry(library, tmp_paths, tmp_path):
     assert library.list() == []
     assert not (tmp_paths.ipas / entry.path).exists()
     assert library.icon(entry.id) is None
-    library.remove(entry.id)  # idempotent
+    library.remove(entry.id)
 
 
 def test_get_unknown_raises(library):
@@ -133,7 +133,7 @@ def test_add_download_elsewhere_registers_in_place(library, tmp_paths, tmp_path)
     ipa = make_ipa(tmp_path / "dl")
     entry = library.add_download(_app(), ipa)
     assert entry.path == str(ipa.resolve()) and entry.owned
-    assert list(tmp_paths.ipas.iterdir()) == []  # no copy
+    assert list(tmp_paths.ipas.iterdir()) == []
 
 
 def test_remove_deletes_owned_download_outside_ipas(library, tmp_path):
@@ -148,7 +148,7 @@ def test_add_file_copies_are_owned(library, tmp_path):
     entry = library.add_file(source)
     assert entry.owned
     library.remove(entry.id)
-    assert source.is_file()  # the user's original is never touched
+    assert source.is_file()
 
 
 def _legacy_row(path):

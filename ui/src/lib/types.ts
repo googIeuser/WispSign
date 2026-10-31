@@ -1,4 +1,4 @@
-/** Shapes of the bridge payloads the views read (see src/wispsign/bridge/api.py). */
+
 
 export type LibraryEntry = {
   id: string
@@ -23,7 +23,7 @@ export type Cert = {
   all_devices: boolean
   expires: string
   added_at: string
-  /** meta.json unreadable: the record can only be removed. */
+
   broken: boolean
 }
 

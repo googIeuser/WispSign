@@ -52,16 +52,16 @@ def test_verify_unsigned_app_is_not_ok(tmp_path):
 def test_verify_catches_unsealed_deep_file_after_long_path_signing(
     tmp_path, sign_in_place
 ):
-    # zsign cannot list a directory deeper than MAX_PATH, silently leaves the file
-    # out of CodeResources and still reports success.
+
+
     app = sign_in_place(make_app(tmp_path / "long", deep_path_len=300))
     r = verify_bundle(app)
     assert not r.ok and any(b.endswith("/deep.bin") for b in r.bad)
 
 
 def test_verify_catches_wrong_hash_after_long_path_signing(tmp_path, sign_in_place):
-    # A file whose directory fits MAX_PATH but whose own path does not gets a
-    # wrong hash2 from zsign (the 0xe8008017 install failure).
+
+
     app = make_app(tmp_path / "long")
     base = os.path.abspath(app)
     directory = os.path.join(base, "a" * (MAX_PATH - 20 - len(base) - 1))

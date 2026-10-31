@@ -19,10 +19,10 @@ from wispsign.signing.verify import verify_bundle
 from wispsign.signing.zsign import ZsignRunner, zsign_path
 
 MAX_PATH = 260
-_FITS_TOTAL = 250  # deep file path length under the default work dir
-_LONG_TOTAL = 320  # deep file path length under a deliberately long work dir
+_FITS_TOTAL = 250
+_LONG_TOTAL = 320
 _MIN_DEEP_REL = 120
-# make_work_dir names are 4 characters; the IPA unpacks to Payload/Test.app.
+
 _WORK_APP_TAIL = ("xxxx", "Payload", f"{APP_NAME}.app")
 
 
@@ -35,7 +35,7 @@ class _FailingRunner(ZsignRunner):
 
 
 class _TamperingRunner(ZsignRunner):
-    """Signs for real, then changes a sealed file so verification must fail."""
+    pass
 
     def __init__(self) -> None:
         super().__init__(zsign_path())
@@ -68,7 +68,7 @@ class _InterruptingRunner(ZsignRunner):
 
 
 class _ReadOnlyFailingRunner(ZsignRunner):
-    """Leaves a read-only file behind, as some IPAs do, then fails."""
+    pass
 
     def __init__(self) -> None:
         super().__init__(zsign_path())
@@ -172,12 +172,12 @@ def test_sign_keeps_push_entitlements_in_the_packed_ipa(tmp_paths, tmp_path):
 
 
 def _work_app_len(work_base: Path) -> int:
-    """Length of ``<work_base>/<4-char work dir>/Payload/Test.app``."""
+    pass
     return len(os.path.join(os.path.abspath(work_base), *_WORK_APP_TAIL))
 
 
 def _deep_rel_len() -> int:
-    """Inner deep-file length that just fits MAX_PATH under the default work dir."""
+    pass
     default_base = Path(os.environ["LOCALAPPDATA"]) / "WS"
     rel_len = _FITS_TOTAL - _work_app_len(default_base) - 1
     assert rel_len >= _MIN_DEEP_REL, "LOCALAPPDATA too long for this test"
@@ -185,7 +185,7 @@ def _deep_rel_len() -> int:
 
 
 def _deep_ipa(tmp_path: Path, rel_len: int) -> Path:
-    """IPA whose deep file is ``rel_len`` chars inside the app and > MAX_PATH here."""
+    pass
     src_app = os.path.abspath(tmp_path / "src" / f"{APP_NAME}.app")
     deep_path_len = len(src_app) + 1 + rel_len
     assert deep_path_len > MAX_PATH, "tmp_path too short to build a long-path IPA"
@@ -199,7 +199,7 @@ def _deep_rel(app: Path) -> str:
 
 def test_sign_deep_paths_verifies(tmp_paths, tmp_path, fake_cert):
     rel_len = _deep_rel_len()
-    ipa = _deep_ipa(tmp_path, rel_len)  # exceeds 260 if unpacked under a long dir
+    ipa = _deep_ipa(tmp_path, rel_len)
     out = sign_ipa(
         SignRequest(ipa, fake_cert.id),
         CertStore(tmp_paths),
@@ -287,7 +287,7 @@ def test_password_not_in_error_detail(tmp_path):
 
 def test_password_redacted_when_echoed(tmp_paths, tmp_path, fake_cert):
     p12, profile, password = CertStore(tmp_paths).materialize(fake_cert.id)
-    missing = tmp_path / f"x{password}.app"  # zsign echoes the invalid path
+    missing = tmp_path / f"x{password}.app"
     with pytest.raises(WispError) as err:
         ZsignRunner(zsign_path()).sign(missing, p12, profile, password)
     assert err.value.code == "error.sign_failed"

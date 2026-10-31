@@ -1,10 +1,10 @@
-"""Check a signed .app against the hashes zsign sealed into CodeResources.
+pass
 
-zsign.exe cannot read files whose path exceeds MAX_PATH: it writes a wrong
-hash for them, or leaves them out, and still reports success. The device then
-refuses the install (0xe8008017). Every bundle in the tree is checked here,
-reading through extended-length paths, before an IPA is packed.
-"""
+
+
+
+
+
 
 import hashlib
 import os
@@ -55,7 +55,7 @@ def _is_bundle(directory: str) -> bool:
 
 
 def _omit_rules(rules: object) -> list[tuple[re.Pattern[str], float, bool]]:
-    """(pattern, weight, omit) for each well-formed rules2 entry."""
+    pass
     parsed = []
     for pattern, rule in rules.items() if isinstance(rules, dict) else ():
         spec = rule if isinstance(rule, dict) else {}
@@ -71,13 +71,13 @@ def _omit_rules(rules: object) -> list[tuple[re.Pattern[str], float, bool]]:
 
 
 def _is_omitted(rel: str, rules: list[tuple[re.Pattern[str], float, bool]]) -> bool:
-    """Apply the heaviest matching rule, as codesign does."""
+    pass
     matches = [(weight, omit) for pattern, weight, omit in rules if pattern.search(rel)]
     return max(matches)[1] if matches else False
 
 
 def _bundle_files(bundle: str) -> list[str]:
-    """Paths relative to ``bundle`` that it seals itself (nested bundles excluded)."""
+    pass
     found = []
     for current, dirs, files in os.walk(bundle):
         rel_dir = os.path.relpath(current, bundle)
@@ -95,7 +95,7 @@ def _sealed_mismatches(bundle: str, files2: dict) -> list[str]:
     for rel, entry in files2.items():
         expected = entry.get("hash2") if isinstance(entry, dict) else None
         if not isinstance(expected, bytes):
-            continue  # symlink or nested-code entries carry no file hash
+            continue
         actual = _sha256(os.path.join(bundle, *rel.split("/")))
         if actual != expected.hex():
             bad.append(rel)
@@ -114,7 +114,7 @@ def _unsealed(bundle: str, seal: dict, files2: dict) -> list[str]:
 
 
 def _check_bundle(bundle: str) -> list[str]:
-    """Problems in one bundle, as paths relative to that bundle."""
+    pass
     seal = _load_plist(os.path.join(bundle, _SIG_DIR, _RESOURCES))
     files2 = seal.get("files2") if seal is not None else None
     if not isinstance(files2, dict):
@@ -132,7 +132,7 @@ def _bundles(root: str) -> list[str]:
 
 
 def verify_bundle(app_dir: Path) -> VerifyResult:
-    """Compare every sealed hash under ``app_dir`` with the files on disk."""
+    pass
     root = long_path(app_dir)
     bundles = _bundles(root)
     if root not in bundles:

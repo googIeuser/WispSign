@@ -1,4 +1,4 @@
-"""Device service: wraps pymobiledevice3 behind a small injectable backend."""
+pass
 
 import asyncio
 import inspect
@@ -28,7 +28,7 @@ class InstalledApp:
     version: str
     signer: str | None
     has_push: bool
-    app_id: str | None  # application-identifier entitlement without the team prefix
+    app_id: str | None
 
 
 class DeviceBackend(Protocol):
@@ -48,7 +48,7 @@ async def _aw(value: Any) -> Any:
 
 
 class Pmd3Backend:
-    """pymobiledevice3-backed implementation; each call runs its own event loop."""
+    pass
 
     def list_devices(self) -> list[DeviceInfo]:
         return asyncio.run(self._list_devices())

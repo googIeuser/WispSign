@@ -1,9 +1,9 @@
-"""Generator for a minimal valid arm64 Mach-O executable (test fixture).
+pass
 
-Produces an MH_EXECUTE image with the load commands a signer expects, so that
-a code signature can be appended into __LINKEDIT. No third-party binary is
-committed; the bytes are built here.
-"""
+
+
+
+
 
 import struct
 
@@ -12,7 +12,7 @@ VM_BASE = 0x1_0000_0000
 MH_MAGIC_64 = 0xFEEDFACF
 CPU_TYPE_ARM64 = 0x0100000C
 MH_EXECUTE = 2
-# MH_NOUNDEFS | MH_DYLDLINK | MH_TWOLEVEL | MH_PIE
+
 MH_FLAGS = 0x1 | 0x4 | 0x80 | 0x200000
 
 LC_SEGMENT_64 = 0x19
@@ -22,9 +22,9 @@ LC_LOAD_DYLIB = 0xC
 LC_LOAD_DYLINKER = 0xE
 LC_MAIN = 0x80000028
 
-TEXT_OFFSET = 0x400  # code lives right after the header/load commands area
+TEXT_OFFSET = 0x400
 LINKEDIT_SIZE = 0x40
-# mov x0, #0 ; ret  (little-endian AArch64)
+
 CODE = struct.pack("<II", 0xD2800000, 0xD65F03C0)
 
 
@@ -68,7 +68,7 @@ def _padded_string_cmd(cmd: int, fixed: bytes, text: str) -> bytes:
 
 
 def build_arm64_stub() -> bytes:
-    """Return the bytes of a minimal arm64 MH_EXECUTE Mach-O."""
+    pass
     text_section = struct.pack(
         "<16s16sQQIIIIIIII",
         _name16("__text"),

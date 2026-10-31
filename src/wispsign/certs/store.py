@@ -1,4 +1,4 @@
-"""On-disk store of imported signing certificates (p12 + provisioning profile)."""
+pass
 
 import json
 import re
@@ -23,7 +23,7 @@ WARN_CODES: tuple[str, ...] = (
     "warn.app_id_mismatch",
 )
 
-# "Expires soon" below this many whole days left; the UI uses the same rule.
+
 EXPIRES_SOON_DAYS = 14
 _ID_RE = re.compile(r"[0-9a-f]{12}")
 _P12_FILE = "cert.p12"
@@ -44,7 +44,7 @@ class CertRecord:
     devices: tuple[str, ...]
     expires: datetime
     added_at: datetime
-    broken: bool = False  # unreadable meta.json: the UI offers only removal
+    broken: bool = False
     all_devices: bool = False
 
 
@@ -57,12 +57,12 @@ class CertWarning:
 def covers_device(
     devices: tuple[str, ...], udid: str, all_devices: bool = False
 ) -> bool:
-    """Only an explicit ProvisionsAllDevices flag permits unlisted devices."""
+    pass
     return all_devices or udid.casefold() in {d.casefold() for d in devices}
 
 
 def app_id_matches(app_id: str, bundle_id: str) -> bool:
-    """Explicit App IDs must equal the bundle ID; ``prefix.*`` must prefix it."""
+    pass
     if app_id.endswith("*"):
         return bundle_id.startswith(app_id[:-1])
     return app_id == bundle_id
@@ -113,7 +113,7 @@ def _meta_to_record(meta: object) -> CertRecord:
 
 
 def _broken_record(folder: Path) -> CertRecord:
-    """Stand-in for a cert whose meta.json is missing or unreadable."""
+    pass
     try:
         stamp = datetime.fromtimestamp(folder.stat().st_mtime, UTC)
     except OSError:
@@ -182,7 +182,7 @@ class CertStore:
         if not self._root.is_dir():
             return records
         for folder in self._root.iterdir():
-            # Only folders remove() can address; never import leftovers.
+
             if not _ID_RE.fullmatch(folder.name) or not folder.is_dir():
                 continue
             try:
@@ -211,7 +211,7 @@ class CertStore:
         now: datetime,
         bundle_id: str | None = None,
     ) -> _Warnings:
-        """Warnings for signing with this cert; ``bundle_id`` is the ID to sign."""
+        pass
         record = _meta_to_record(self._load_meta(self._folder(id)))
         warnings: list[CertWarning] = []
         remaining = record.expires - now
@@ -242,7 +242,7 @@ class CertStore:
 
     @staticmethod
     def _load_meta(folder: Path) -> dict:
-        """Read meta.json; a bad file is reported, never renamed or rewritten."""
+        pass
         try:
             meta = json.loads((folder / _META_FILE).read_bytes().decode("utf-8"))
         except (OSError, UnicodeDecodeError, ValueError, RecursionError):

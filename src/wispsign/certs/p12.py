@@ -1,4 +1,4 @@
-"""Read signing identity metadata from a PKCS#12 file."""
+pass
 
 from dataclasses import dataclass
 from datetime import datetime
@@ -29,7 +29,7 @@ def load_p12(data: bytes, password: str) -> P12Info:
     try:
         key, cert, _ = pkcs12.load_key_and_certificates(data, password.encode())
     except ValueError:
-        # Deliberately do not chain or echo details: they must never carry the password.
+
         raise WispError("error.p12_password") from None
     except UnsupportedAlgorithm:
         raise WispError("error.p12_unsupported") from None

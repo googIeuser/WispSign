@@ -111,7 +111,7 @@ def test_extract_cleans_up_on_corrupt_member(tmp_path):
         {"Payload/A.app/a": b"a" * 40, "Payload/A.app/b": b"b" * 40},
     )
     raw = bytearray(ipa.read_bytes())
-    raw[raw.rfind(b"b" * 40)] ^= 0xFF  # corrupt stored data of the second member
+    raw[raw.rfind(b"b" * 40)] ^= 0xFF
     ipa.write_bytes(raw)
     dest = tmp_path / "w"
     _assert_invalid(ipa, dest)
@@ -191,7 +191,7 @@ def test_extract_wraps_write_oserror(tmp_path):
     ipa = _zip(tmp_path / "a.ipa", {"Payload/A.app/x": b"x"})
     dest = tmp_path / "w"
     dest.mkdir()
-    (dest / "Payload").write_bytes(b"blocker")  # file where a directory is needed
+    (dest / "Payload").write_bytes(b"blocker")
     with pytest.raises(WispError) as err:
         safe_extract(ipa, dest)
     assert err.value.code == "error.ipa_invalid"

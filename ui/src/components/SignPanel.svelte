@@ -35,9 +35,9 @@
   const running = $derived(job?.status === 'running')
   const bundleInvalid = $derived(bundleMode === 'change' && !isValidBundleId(bundleId.trim()))
   const iconName = $derived(iconPath?.split(/[\\/]/).pop() ?? '')
-  // Marked on the collapsed toggle so a change never hides behind it.
+
   const customized = $derived(bundleMode === 'change' || !!displayName.trim() || !!iconPath)
-  // The bundle ID that will be signed: checked against the profile's App ID.
+
   const targetBundleId = $derived(bundleMode === 'change' && !bundleInvalid ? bundleId.trim() : entry.bundle_id)
   const validationKey = $derived(JSON.stringify([certId, device?.udid ?? null, targetBundleId]))
   const canSign = $derived(
@@ -57,7 +57,7 @@
       certsError = res.error
       return
     }
-    certs = res.data.filter((c) => !c.broken) // a broken record cannot sign
+    certs = res.data.filter((c) => !c.broken)
     if (!certs.some((c) => c.id === certId)) certId = certs[0]?.id ?? ''
   }
 

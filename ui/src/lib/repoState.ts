@@ -1,4 +1,4 @@
-/** Repo list state: refresh results paired with urls, merged with live edits. */
+
 import type { WispErr } from './api'
 
 export type RepoApp = {
@@ -26,7 +26,7 @@ export type RepoEntry = { url: string; repo?: Repo; error?: WispErr }
 const isObject = (value: unknown): value is Record<string, unknown> =>
   typeof value === 'object' && value !== null
 
-/** repos_refresh returns one Repo or {error} per url, in repos_list order. */
+
 export function refreshEntries(urls: string[], results: unknown): RepoEntry[] {
   if (!Array.isArray(results)) return []
   const entries: RepoEntry[] = []
@@ -41,10 +41,10 @@ export function refreshEntries(urls: string[], results: unknown): RepoEntry[] {
   return entries
 }
 
-/**
- * Entries for `urls` (the backend's current list): refreshed data first,
- * else what the UI already had (a repo added while the refresh ran).
- */
+
+
+
+
 export function mergeRepos(urls: string[], refreshed: RepoEntry[], current: RepoEntry[]): RepoEntry[] {
   const byUrl = (list: RepoEntry[], url: string) => list.find((e) => e.url === url)
   return urls.flatMap((url) => {

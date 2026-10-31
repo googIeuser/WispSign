@@ -34,7 +34,7 @@
       .flatMap((e) => e.repo?.apps ?? [])
       .filter((app) => matchesQuery(query, [app.name, app.bundle_id, app.developer])),
   )
-  // Row keys stay unique even if a repo ever lists one bundle ID twice.
+
   const appKeys = $derived(uniqueKeys(apps.map(baseKey)))
   const keyByApp = $derived(new Map(apps.map((app, i) => [app, appKeys[i]])))
   const appKey = (app: RepoApp) => keyByApp.get(app) ?? baseKey(app)

@@ -1,8 +1,8 @@
-"""Read zsign's embedded XML entitlements in every Mach-O architecture.
+pass
 
-This checks the declared app identity and push environment against the profile;
-it does not replace the device's cryptographic or provisioning checks.
-"""
+
+
+
 
 import os
 import plistlib
@@ -78,7 +78,7 @@ def _thin_entitlements(handle: BinaryIO, start: int, size: int) -> dict:
         command, command_size = struct.unpack_from(endian + "II", commands, cursor)
         if not 8 <= command_size <= len(commands) - cursor:
             raise ValueError("invalid load command size")
-        if command == 0x1D:  # LC_CODE_SIGNATURE; offsets are relative to this slice
+        if command == 0x1D:
             if signature is not None or command_size != 16:
                 raise ValueError("invalid code signature command")
             offset, length = struct.unpack_from(endian + "II", commands, cursor + 8)
@@ -92,7 +92,7 @@ def _thin_entitlements(handle: BinaryIO, start: int, size: int) -> dict:
 
 
 def read_entitlements(executable: Path) -> tuple[dict, ...]:
-    """Return the signed XML dictionary of every thin/universal Mach-O slice."""
+    pass
     try:
         with open(long_path(executable), "rb") as handle:
             end = os.fstat(handle.fileno()).st_size
@@ -128,7 +128,7 @@ def read_entitlements(executable: Path) -> tuple[dict, ...]:
 
 
 def verify_entitlements(app: Path, profile: ProfileInfo) -> None:
-    """Reject missing or changed identity/push entitlements before packaging."""
+    pass
     try:
         with open(long_path(app / "Info.plist"), "rb") as handle:
             info = plistlib.loads(handle.read(8 * 1024 * 1024))
