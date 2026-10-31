@@ -53,14 +53,12 @@ def test_verify_catches_unsealed_deep_file_after_long_path_signing(
     tmp_path, sign_in_place
 ):
 
-
     app = sign_in_place(make_app(tmp_path / "long", deep_path_len=300))
     r = verify_bundle(app)
     assert not r.ok and any(b.endswith("/deep.bin") for b in r.bad)
 
 
 def test_verify_catches_wrong_hash_after_long_path_signing(tmp_path, sign_in_place):
-
 
     app = make_app(tmp_path / "long")
     base = os.path.abspath(app)

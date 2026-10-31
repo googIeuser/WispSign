@@ -1,11 +1,3 @@
-pass
-
-
-
-
-
-
-
 import hashlib
 import os
 import plistlib
@@ -55,7 +47,6 @@ def _is_bundle(directory: str) -> bool:
 
 
 def _omit_rules(rules: object) -> list[tuple[re.Pattern[str], float, bool]]:
-    pass
     parsed = []
     for pattern, rule in rules.items() if isinstance(rules, dict) else ():
         spec = rule if isinstance(rule, dict) else {}
@@ -71,13 +62,11 @@ def _omit_rules(rules: object) -> list[tuple[re.Pattern[str], float, bool]]:
 
 
 def _is_omitted(rel: str, rules: list[tuple[re.Pattern[str], float, bool]]) -> bool:
-    pass
     matches = [(weight, omit) for pattern, weight, omit in rules if pattern.search(rel)]
     return max(matches)[1] if matches else False
 
 
 def _bundle_files(bundle: str) -> list[str]:
-    pass
     found = []
     for current, dirs, files in os.walk(bundle):
         rel_dir = os.path.relpath(current, bundle)
@@ -114,7 +103,6 @@ def _unsealed(bundle: str, seal: dict, files2: dict) -> list[str]:
 
 
 def _check_bundle(bundle: str) -> list[str]:
-    pass
     seal = _load_plist(os.path.join(bundle, _SIG_DIR, _RESOURCES))
     files2 = seal.get("files2") if seal is not None else None
     if not isinstance(files2, dict):
@@ -132,7 +120,6 @@ def _bundles(root: str) -> list[str]:
 
 
 def verify_bundle(app_dir: Path) -> VerifyResult:
-    pass
     root = long_path(app_dir)
     bundles = _bundles(root)
     if root not in bundles:

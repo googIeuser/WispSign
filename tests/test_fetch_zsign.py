@@ -11,7 +11,6 @@ _SCRIPT = Path(__file__).resolve().parents[1] / "packaging" / "fetch_zsign.py"
 
 @pytest.fixture
 def fetch(monkeypatch, tmp_path):
-    pass
     spec = importlib.util.spec_from_file_location("fetch_zsign", _SCRIPT)
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)

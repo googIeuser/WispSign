@@ -1,5 +1,3 @@
-pass
-
 import hashlib
 import json
 import re
@@ -41,7 +39,6 @@ def _io_error(exc: OSError) -> WispError:
 
 
 def _create_new(path: Path) -> bool:
-    pass
     try:
         path.open("xb").close()
     except FileExistsError:
@@ -60,11 +57,6 @@ def _is_old_file(path: Path, now: float) -> bool:
 
 
 def _clear_stale_reservations(dest_dir: Path, stem: str) -> None:
-    pass
-
-
-
-
 
     pattern = re.compile(re.escape(stem) + r"(-\d+)?\.ipa\.part")
     now = time.time()
@@ -86,10 +78,6 @@ def _clear_stale_reservations(dest_dir: Path, stem: str) -> None:
 
 
 def _reserve(dest_dir: Path, stem: str) -> tuple[Path, Path]:
-    pass
-
-
-
 
     for n in range(1, MAX_NAME_ATTEMPTS + 1):
         name = stem if n == 1 else f"{stem}-{n}"
@@ -115,8 +103,6 @@ class RepoClient:
         self._paths = paths
         self._http = http or httpx.Client(timeout=TIMEOUT_SECONDS)
         self._store = JsonStore(paths.repos, [])
-
-
 
     def list_urls(self) -> list[str]:
         return [entry["url"] for entry in self._entries()]
@@ -146,7 +132,6 @@ class RepoClient:
         self._cache_file(url).unlink(missing_ok=True)
 
     def cached(self, url: str) -> Repo:
-        pass
         data = self._read_cache(url)
         if data is not None:
             try:
@@ -164,14 +149,11 @@ class RepoClient:
                 results.append(exc)
         return results
 
-
-
     def _cache_file(self, url: str) -> Path:
         digest = hashlib.sha1(url.encode("utf-8"), usedforsecurity=False).hexdigest()
         return self._paths.cache / "repos" / f"{digest}.json"
 
     def _fetch_json(self, url: str) -> object:
-        pass
         try:
             body = self._fetch_bytes(url)
         except WispError as exc:
@@ -192,7 +174,6 @@ class RepoClient:
 
     @contextmanager
     def _open_https(self, url: str) -> Iterator[httpx.Response]:
-        pass
         try:
             for _ in range(MAX_REDIRECTS + 1):
                 if not is_https(url):
@@ -242,15 +223,12 @@ class RepoClient:
         except (OSError, WispError):
             return None
 
-
-
     def download(
         self,
         app: RepoApp,
         dest_dir: Path,
         on_progress: Callable[[int, int | None], None],
     ) -> Path:
-        pass
         if not is_https(app.download_url):
             raise WispError("error.url_not_https")
         try:

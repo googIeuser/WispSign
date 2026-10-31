@@ -35,8 +35,6 @@ class _FailingRunner(ZsignRunner):
 
 
 class _TamperingRunner(ZsignRunner):
-    pass
-
     def __init__(self) -> None:
         super().__init__(zsign_path())
 
@@ -68,8 +66,6 @@ class _InterruptingRunner(ZsignRunner):
 
 
 class _ReadOnlyFailingRunner(ZsignRunner):
-    pass
-
     def __init__(self) -> None:
         super().__init__(zsign_path())
 
@@ -172,12 +168,10 @@ def test_sign_keeps_push_entitlements_in_the_packed_ipa(tmp_paths, tmp_path):
 
 
 def _work_app_len(work_base: Path) -> int:
-    pass
     return len(os.path.join(os.path.abspath(work_base), *_WORK_APP_TAIL))
 
 
 def _deep_rel_len() -> int:
-    pass
     default_base = Path(os.environ["LOCALAPPDATA"]) / "WS"
     rel_len = _FITS_TOTAL - _work_app_len(default_base) - 1
     assert rel_len >= _MIN_DEEP_REL, "LOCALAPPDATA too long for this test"
@@ -185,7 +179,6 @@ def _deep_rel_len() -> int:
 
 
 def _deep_ipa(tmp_path: Path, rel_len: int) -> Path:
-    pass
     src_app = os.path.abspath(tmp_path / "src" / f"{APP_NAME}.app")
     deep_path_len = len(src_app) + 1 + rel_len
     assert deep_path_len > MAX_PATH, "tmp_path too short to build a long-path IPA"

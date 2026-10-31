@@ -594,9 +594,6 @@ def test_jsonable_converts_types():
     assert jsonable({"a": (stamp, Path("x"))}) == {"a": ["2026-01-02T03:04:05Z", "x"]}
 
 
-
-
-
 def test_job_result_available_for_fast_job(api, events):
     job = api.repos_refresh()["data"]
     wait_done(events, job)

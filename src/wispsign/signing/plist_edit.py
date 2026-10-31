@@ -1,5 +1,3 @@
-pass
-
 import os
 import plistlib
 from dataclasses import dataclass
@@ -10,7 +8,6 @@ from wispsign.errors import WispError
 from wispsign.signing.ipa import long_path
 
 _INFO = "Info.plist"
-
 
 
 _ICON_IPHONE = "WispIcon60x60"
@@ -58,7 +55,6 @@ def _icon_files(info: dict) -> list[str]:
 
 
 def _icon_paths(app_root: str, info: dict) -> list[str]:
-    pass
     bases = [n.removesuffix(".png") for n in _icon_files(info)]
     if not bases:
         return []
@@ -77,7 +73,6 @@ def _require_bundle_id(info: dict) -> str:
 
 
 def read_info(app_dir: Path) -> AppInfo:
-    pass
     root = long_path(app_dir)
     info, _ = _load(os.path.join(root, _INFO))
     bundle_id = _require_bundle_id(info)
@@ -116,7 +111,6 @@ def _rebundle(app_root: str, old: str, new: str) -> None:
 def apply_overrides(
     app_dir: Path, name: str | None, bundle_id: str | None, icon_png: bytes | None
 ) -> None:
-    pass
     root = long_path(app_dir)
     plist_path = os.path.join(root, _INFO)
     info, binary = _load(plist_path)
@@ -134,7 +128,6 @@ def apply_overrides(
 
 
 def _primary_with_files(holder: object, files: list[str]) -> dict:
-    pass
     icons = dict(holder) if isinstance(holder, dict) else {}
     primary = icons.get("CFBundlePrimaryIcon")
     primary = dict(primary) if isinstance(primary, dict) else {}
@@ -145,10 +138,6 @@ def _primary_with_files(holder: object, files: list[str]) -> dict:
 
 
 def _apply_icon(root: str, info: dict, icon_png: bytes) -> None:
-    pass
-
-
-
 
     targets = [os.path.join(root, name) for name in _ICON_FILES]
     targets += [p for p in _icon_paths(root, info) if p not in targets]

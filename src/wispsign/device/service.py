@@ -1,5 +1,3 @@
-pass
-
 import asyncio
 import inspect
 import logging
@@ -48,8 +46,6 @@ async def _aw(value: Any) -> Any:
 
 
 class Pmd3Backend:
-    pass
-
     def list_devices(self) -> list[DeviceInfo]:
         return asyncio.run(self._list_devices())
 

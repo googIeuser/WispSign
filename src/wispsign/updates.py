@@ -1,5 +1,3 @@
-pass
-
 import os
 import re
 from dataclasses import dataclass
@@ -14,7 +12,6 @@ _REPO = re.compile(r"[A-Za-z0-9_-]+/[A-Za-z0-9_.-]+")
 
 @dataclass(frozen=True)
 class UpdateCheck:
-
     status: Literal["available", "current", "failed"]
     latest: str | None
 
@@ -34,7 +31,6 @@ def _pad(version: tuple[int, ...], size: int) -> tuple[int, ...]:
 
 
 def update_repo() -> str | None:
-    pass
 
     repo = os.environ.get("WISPSIGN_UPDATE_REPO", "")
     return repo if _REPO.fullmatch(repo) else None
@@ -43,7 +39,6 @@ def update_repo() -> str | None:
 def check_latest(
     current: str, repo: str | None = None, http: httpx.Client | None = None
 ) -> UpdateCheck:
-    pass
     repo = (update_repo() or "") if repo is None else repo
     if not _REPO.fullmatch(repo):
         return _FAILED

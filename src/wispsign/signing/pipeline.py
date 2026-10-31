@@ -1,5 +1,3 @@
-pass
-
 import logging
 import os
 import re
@@ -53,7 +51,6 @@ def _sign_in(
     runner: ZsignRunner,
     on_step: Callable[[str], None],
 ) -> tuple[Path, Path]:
-    pass
     p12, profile, password = certs.materialize(req.cert_id)
     on_step("extract")
     app = safe_extract(req.ipa, work)
@@ -77,10 +74,6 @@ def sign_ipa(
     runner: ZsignRunner | None = None,
     work_base: Path | None = None,
 ) -> Path:
-    pass
-
-
-
 
     runner = runner if runner is not None else ZsignRunner(zsign_path())
     work = make_work_dir(work_base)
@@ -105,7 +98,6 @@ def _clear_readonly_and_retry(func: Callable, path: str, exc: BaseException) -> 
 
 
 def _remove_work_dir(work: Path) -> None:
-    pass
     target = long_path(work)
     for attempt in range(1, _CLEANUP_ATTEMPTS + 1):
         try:

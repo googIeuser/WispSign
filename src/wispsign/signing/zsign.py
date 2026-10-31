@@ -1,5 +1,3 @@
-pass
-
 import subprocess
 import sys
 from pathlib import Path
@@ -16,7 +14,6 @@ _NO_WINDOW = getattr(subprocess, "CREATE_NO_WINDOW", 0)
 
 
 def zsign_path() -> Path:
-    pass
     if getattr(sys, "frozen", False):
         return Path(sys._MEIPASS).joinpath(*_EXE_PARTS)
     return _REPO_ROOT.joinpath("vendor", *_EXE_PARTS)
@@ -33,7 +30,6 @@ class ZsignRunner:
         self._exe = exe
 
     def sign(self, app_dir: Path, p12: Path, profile: Path, password: str) -> None:
-        pass
         if not self._exe.is_file():
             raise WispError("error.zsign_missing")
         args = [str(self._exe), "-f", "-k", str(p12), "-p", password]
@@ -48,7 +44,6 @@ class ZsignRunner:
                 creationflags=_NO_WINDOW,
             )
         except OSError as exc:
-
             raise WispError(
                 "error.sign_failed", f"cannot start zsign: {type(exc).__name__}"
             ) from None

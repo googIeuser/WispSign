@@ -1,11 +1,3 @@
-pass
-
-
-
-
-
-
-
 import json
 import logging
 import threading
@@ -36,7 +28,6 @@ class JobRunner:
         return job
 
     def result(self, job: str) -> dict | None:
-        pass
         with self._lock:
             return self._results.get(job)
 

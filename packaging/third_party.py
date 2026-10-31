@@ -39,7 +39,6 @@ def _wanted(req: Requirement, extras: frozenset[str]) -> bool:
 
 
 def runtime_closure(root: str = PROJECT) -> list[metadata.Distribution]:
-    pass
     found: dict[str, metadata.Distribution] = {}
     queue: list[tuple[str, frozenset[str]]] = [(root, frozenset())]
     seen: set[tuple[str, frozenset[str]]] = set()

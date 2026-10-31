@@ -1,5 +1,3 @@
-pass
-
 import _winapi
 import json
 import os

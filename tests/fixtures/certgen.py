@@ -1,5 +1,3 @@
-pass
-
 import plistlib
 import secrets
 from datetime import UTC, datetime, timedelta
@@ -16,10 +14,6 @@ _ca: list = []
 
 
 def _test_ca():
-    pass
-
-
-
 
     if not _ca:
         key = ec.generate_private_key(ec.SECP256R1())
@@ -78,7 +72,6 @@ def _p12(key, cert, password: str) -> bytes:
 
 
 def wrap_plist(plist: dict, key=None, cert=None) -> bytes:
-    pass
     if key is None:
         key, cert = _make_cert("TEAM123456", 365)
     return (
@@ -90,7 +83,6 @@ def wrap_plist(plist: dict, key=None, cert=None) -> bytes:
 
 
 def valid_plist(**overrides) -> dict:
-    pass
     plist = {
         "Name": "P",
         "UUID": "U",
@@ -127,7 +119,6 @@ def make_pair(
     team: str = "TEAM123456",
     all_devices: bool = False,
 ) -> tuple[bytes, bytes, str]:
-    pass
     key, cert = _make_cert(team, expires_days)
     password = secrets.token_hex(8)
     entitlements: dict = {"application-identifier": f"{team}.{app_id}"}

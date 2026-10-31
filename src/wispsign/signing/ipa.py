@@ -1,10 +1,3 @@
-pass
-
-
-
-
-
-
 import errno
 import os
 import shutil
@@ -31,7 +24,6 @@ _UNC = chr(92) * 2
 
 
 def long_path(path: Path | str) -> str:
-    pass
     absolute = os.path.abspath(path)
     if os.name != "nt" or absolute.startswith(_LONG):
         return absolute
@@ -61,7 +53,6 @@ def _validate_member(info: zipfile.ZipInfo) -> list[str]:
 
 
 def _check_collisions(entries: list[tuple[zipfile.ZipInfo, list[str]]]) -> None:
-    pass
     files: set[tuple[str, ...]] = set()
     dirs: set[tuple[str, ...]] = set()
     for info, parts in entries:
@@ -89,8 +80,6 @@ def _find_app(entries: list[tuple[zipfile.ZipInfo, list[str]]]) -> str:
 
 
 class _Created:
-    pass
-
     def __init__(self) -> None:
         self.dirs: list[str] = []
         self.files: list[str] = []
@@ -123,7 +112,6 @@ class _Created:
 
 
 def safe_extract(ipa: Path, dest: Path, max_total: int = 4 * 1024**3) -> Path:
-    pass
     try:
         archive = zipfile.ZipFile(ipa)
     except (zipfile.BadZipFile, OSError) as exc:
@@ -187,7 +175,6 @@ def _is_macho(path: str) -> bool:
 
 
 def pack_ipa(app_dir: Path, out: Path) -> Path:
-    pass
     root = long_path(app_dir)
     prefix = f"{_PAYLOAD}/{app_dir.name}"
     with zipfile.ZipFile(

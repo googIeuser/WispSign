@@ -1,5 +1,3 @@
-pass
-
 import os
 import secrets
 import string
@@ -52,7 +50,6 @@ def _random_name() -> str:
 
 
 def make_work_dir(base: Path | None = None) -> Path:
-    pass
     parent = base if base is not None else Path(os.environ["LOCALAPPDATA"]) / "WS"
     parent.mkdir(parents=True, exist_ok=True)
     while True:

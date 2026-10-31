@@ -1,5 +1,3 @@
-pass
-
 import base64
 import binascii
 import ctypes
@@ -33,7 +31,7 @@ def _call(func, data: bytes) -> bytes | None:
     ok = func(
         ctypes.byref(blob_in), None, None, None, None,
         _CRYPTPROTECT_UI_FORBIDDEN, ctypes.byref(blob_out),
-    )
+    )  # fmt: skip
     if not ok:
         return None
     try:

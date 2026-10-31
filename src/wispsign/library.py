@@ -1,5 +1,3 @@
-pass
-
 import plistlib
 import posixpath
 import shutil
@@ -37,7 +35,6 @@ _Entries = list[LibraryEntry]
 
 
 def _legacy_owned(path: object) -> bool:
-    pass
     return isinstance(path, str) and not Path(path).is_absolute()
 
 
@@ -96,7 +93,6 @@ def _largest_icon(zf: zipfile.ZipFile, app_dir: str, bases: list[str]) -> bytes 
 
 
 def _inspect(ipa: Path) -> tuple[dict, bytes | None]:
-    pass
     try:
         with zipfile.ZipFile(ipa) as zf:
             member = _find_info_plist(zf)
@@ -134,8 +130,6 @@ class Library:
         self._store = JsonStore(paths.library, [])
         self._lock = threading.Lock()
 
-
-
     def list(self) -> _Entries:
         data = self._store.load()
         entries: list[LibraryEntry] = []
@@ -164,8 +158,6 @@ class Library:
         except OSError:
             return None
 
-
-
     def add_file(self, ipa: Path) -> LibraryEntry:
         info, icon = _inspect(ipa)
         entry_id = uuid.uuid4().hex[:_ID_LEN]
@@ -185,7 +177,6 @@ class Library:
         )
 
     def add_download(self, app: RepoApp, path: Path) -> LibraryEntry:
-        pass
         try:
             _, icon = _inspect(path)
         except WispError:
@@ -219,8 +210,6 @@ class Library:
         if target.owned:
             (self._paths.ipas / target.path).unlink(missing_ok=True)
         self._icon_file(id).unlink(missing_ok=True)
-
-
 
     def _copy_in(self, source: Path, name: str) -> None:
         try:

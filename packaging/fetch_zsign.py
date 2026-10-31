@@ -1,10 +1,3 @@
-pass
-
-
-
-
-
-
 import hashlib
 import io
 import sys
@@ -40,7 +33,6 @@ def _archive_bytes() -> bytes:
 
 
 def _extract_exe(data: bytes) -> bytes:
-    pass
     with zipfile.ZipFile(io.BytesIO(data)) as archive:
         return archive.read(EXE_NAME)
 

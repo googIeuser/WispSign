@@ -1,5 +1,3 @@
-pass
-
 import argparse
 import json
 import logging
@@ -31,7 +29,6 @@ STALE_AFTER_SECONDS = 6 * 60 * 60
 
 
 def ui_index_path() -> Path:
-    pass
     bundle = getattr(sys, "_MEIPASS", None)
     if bundle:
         return Path(bundle) / "ui" / "index.html"
@@ -39,8 +36,6 @@ def ui_index_path() -> Path:
 
 
 class Emitter:
-    pass
-
     def __init__(self) -> None:
         self._window: Any = None
         self._lock = threading.Lock()
@@ -65,7 +60,6 @@ class Emitter:
 
 
 def handle_drop(api: Any, emit: Callable[[dict], None], event: Any) -> None:
-    pass
     try:
         files = event["dataTransfer"]["files"]
     except (KeyError, TypeError):
@@ -122,7 +116,6 @@ def _work_root() -> Path | None:
 
 
 def sweep_stale(paths: AppPaths, work_root: Path | None = None) -> None:
-    pass
     root = work_root or _work_root()
     signed = paths.cache / "signed"
     now = time.time()
@@ -144,7 +137,6 @@ def sweep_stale(paths: AppPaths, work_root: Path | None = None) -> None:
 
 
 def register_drop(window: Any, handler: DOMEventHandler) -> None:
-    pass
     try:
         drop = window.dom.document.events.drop
         if handler in getattr(drop, "_items", ()):

@@ -1,10 +1,3 @@
-pass
-
-
-
-
-
-
 import struct
 
 PAGE = 0x4000
@@ -68,7 +61,6 @@ def _padded_string_cmd(cmd: int, fixed: bytes, text: str) -> bytes:
 
 
 def build_arm64_stub() -> bytes:
-    pass
     text_section = struct.pack(
         "<16s16sQQIIIIIIII",
         _name16("__text"),

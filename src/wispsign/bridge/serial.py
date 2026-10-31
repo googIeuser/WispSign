@@ -1,5 +1,3 @@
-pass
-
 import dataclasses
 from datetime import UTC, datetime
 from pathlib import Path
@@ -7,7 +5,6 @@ from typing import Any
 
 
 def jsonable(value: Any) -> Any:
-    pass
     if dataclasses.is_dataclass(value) and not isinstance(value, type):
         return {
             f.name: jsonable(getattr(value, f.name)) for f in dataclasses.fields(value)

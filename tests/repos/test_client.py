@@ -327,7 +327,6 @@ SEVEN_HOURS = 7 * 60 * 60
 
 
 def _leftover(client, dest, ipa_bytes=b"", part_bytes=b"partial", age=SEVEN_HOURS):
-    pass
     name = client.download(_ipa_app(client), dest, lambda d, t: None)
     name.unlink()
     part = name.with_name(name.name + ".part")

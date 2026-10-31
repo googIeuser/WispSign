@@ -1,9 +1,3 @@
-pass
-
-
-
-
-
 import os
 import plistlib
 import struct
@@ -92,7 +86,6 @@ def _thin_entitlements(handle: BinaryIO, start: int, size: int) -> dict:
 
 
 def read_entitlements(executable: Path) -> tuple[dict, ...]:
-    pass
     try:
         with open(long_path(executable), "rb") as handle:
             end = os.fstat(handle.fileno()).st_size
@@ -128,7 +121,6 @@ def read_entitlements(executable: Path) -> tuple[dict, ...]:
 
 
 def verify_entitlements(app: Path, profile: ProfileInfo) -> None:
-    pass
     try:
         with open(long_path(app / "Info.plist"), "rb") as handle:
             info = plistlib.loads(handle.read(8 * 1024 * 1024))

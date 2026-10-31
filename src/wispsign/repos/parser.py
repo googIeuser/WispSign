@@ -1,5 +1,3 @@
-pass
-
 from typing import TypeGuard
 from urllib.parse import urlparse
 
@@ -32,7 +30,6 @@ def _size(value: object) -> int | None:
 
 
 def _release(raw: dict) -> dict:
-    pass
     versions = raw.get("versions")
     if isinstance(versions, list) and versions and isinstance(versions[0], dict):
         return versions[0]

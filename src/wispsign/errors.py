@@ -1,7 +1,4 @@
-pass
-
 import re
-
 
 ERROR_CODES: tuple[str, ...] = (
     "error.identifier_mismatch",

@@ -1,5 +1,3 @@
-pass
-
 import json
 import re
 import shutil
@@ -57,12 +55,10 @@ class CertWarning:
 def covers_device(
     devices: tuple[str, ...], udid: str, all_devices: bool = False
 ) -> bool:
-    pass
     return all_devices or udid.casefold() in {d.casefold() for d in devices}
 
 
 def app_id_matches(app_id: str, bundle_id: str) -> bool:
-    pass
     if app_id.endswith("*"):
         return bundle_id.startswith(app_id[:-1])
     return app_id == bundle_id
@@ -113,7 +109,6 @@ def _meta_to_record(meta: object) -> CertRecord:
 
 
 def _broken_record(folder: Path) -> CertRecord:
-    pass
     try:
         stamp = datetime.fromtimestamp(folder.stat().st_mtime, UTC)
     except OSError:
@@ -182,7 +177,6 @@ class CertStore:
         if not self._root.is_dir():
             return records
         for folder in self._root.iterdir():
-
             if not _ID_RE.fullmatch(folder.name) or not folder.is_dir():
                 continue
             try:
@@ -211,7 +205,6 @@ class CertStore:
         now: datetime,
         bundle_id: str | None = None,
     ) -> _Warnings:
-        pass
         record = _meta_to_record(self._load_meta(self._folder(id)))
         warnings: list[CertWarning] = []
         remaining = record.expires - now
@@ -242,7 +235,6 @@ class CertStore:
 
     @staticmethod
     def _load_meta(folder: Path) -> dict:
-        pass
         try:
             meta = json.loads((folder / _META_FILE).read_bytes().decode("utf-8"))
         except (OSError, UnicodeDecodeError, ValueError, RecursionError):

@@ -1,11 +1,3 @@
-pass
-
-
-
-
-
-
-
 import base64
 import functools
 import importlib.metadata
@@ -60,8 +52,6 @@ class Dialogs(Protocol):
 
 
 class PywebviewDialogs:
-    pass
-
     def __init__(self) -> None:
         self._window: Any = None
 
@@ -111,7 +101,6 @@ def _app_version() -> str:
 
 
 def _usable_dir(value: object) -> bool:
-    pass
     if not isinstance(value, str) or not value:
         return False
     path = Path(value)
@@ -133,7 +122,6 @@ def _read_icon(icon_path: str | None) -> bytes | None:
 
 
 def _is_link(path: Path) -> bool:
-    pass
     if path.is_symlink() or path.is_junction():
         return True
     attributes = getattr(os.lstat(path), "st_file_attributes", 0)
@@ -141,7 +129,6 @@ def _is_link(path: Path) -> bool:
 
 
 def _remove_link(path: Path) -> None:
-    pass
     try:
         path.unlink()
     except (IsADirectoryError, PermissionError):
@@ -149,11 +136,6 @@ def _remove_link(path: Path) -> None:
 
 
 def _purge(directory: Path, keep: frozenset[Path]) -> int:
-    pass
-
-
-
-
 
     freed = 0
     for child in directory.iterdir():
@@ -216,8 +198,6 @@ class WispApi:
         if bind:
             bind(window)
 
-
-
     @_envelope
     def get_state(self) -> dict:
         return {
@@ -257,12 +237,6 @@ class WispApi:
 
     @_envelope
     def cache_clear(self) -> int:
-        pass
-
-
-
-
-
 
         cache = self._paths.cache
         if not cache.is_dir():
@@ -279,8 +253,6 @@ class WispApi:
         current = _app_version()
         result = check_latest(current, http=self._http)
         return {"current": current, "status": result.status, "latest": result.latest}
-
-
 
     @_envelope
     def repos_list(self) -> list[str]:
@@ -336,14 +308,8 @@ class WispApi:
 
     @_envelope
     def job_result(self, job_id: str) -> dict | None:
-        pass
-
-
-
 
         return self._jobs.result(job_id)
-
-
 
     @_envelope
     def library_list(self) -> list:
@@ -371,15 +337,12 @@ class WispApi:
 
     @_envelope
     def pick_folder(self) -> str | None:
-        pass
         return self._dialogs.pick_folder()
 
     @_envelope
     def pick_icon(self) -> str | None:
         picked = self._dialogs.open_files("png", False)
         return picked[0] if picked else None
-
-
 
     @_envelope
     def certs_list(self) -> list:
@@ -408,10 +371,7 @@ class WispApi:
     def certs_validate(
         self, id: str, udid: str | None, bundle_id: str | None = None
     ) -> list:
-        pass
         return self._certs.validate(id, udid, datetime.now(UTC), bundle_id or None)
-
-
 
     @_envelope
     def device_list(self) -> list:
@@ -424,8 +384,6 @@ class WispApi:
     @_envelope
     def device_uninstall(self, udid: str, bundle_id: str) -> None:
         self._devices.uninstall(bundle_id, udid)
-
-
 
     @_envelope
     def sign_and_install(

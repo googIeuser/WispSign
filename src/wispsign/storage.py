@@ -1,5 +1,3 @@
-pass
-
 import copy
 import json
 import os
@@ -14,7 +12,6 @@ _REPLACE_DELAY_S = 0.01
 
 
 def _replace_with_retry(src: str, dst: Path) -> None:
-    pass
     for attempt in range(_REPLACE_ATTEMPTS):
         try:
             os.replace(src, dst)
@@ -58,7 +55,6 @@ class JsonStore:
             raise
 
     def _set_aside(self) -> Any:
-        pass
         self._quarantine()
         return copy.deepcopy(self._default)
 
